@@ -7,8 +7,10 @@ import Link from 'next/link';
 
 const Navbar = () => {
 	const router = useRouter();
-	const JWT = useSelector(state => state.auth.JWT);
+	const token = useSelector((state) => state.auth.token);
 	const [showNav, setShowNav] = useState(true)
+
+	console.log(token)
 	const menu = [
 		{
 			name: 'Home',
@@ -56,19 +58,18 @@ const Navbar = () => {
 								</div>
 							</Link>
 						)
-					}
-					)
+					})
 				}
 				{
-					JWT ? (
+					token ? (
 						<>
-							<Link href={'/calendar'} key={index}>
-								<div className={styles.menu_item + ` ${router.pathname === item.link ? styles.active : ''}`} >
+							<Link href={'/calendar'} >
+								<div className={styles.menu_item + ` ${router.pathname === menu.link ? styles.active : ''}`} >
 									Calendar
 								</div>
 							</Link>
 							<Link href={'/profile'}>
-								<div className={styles.menu_item + ` ${router.pathname === item.link ? styles.active : ''}`} >
+								<div className={styles.menu_item + ` ${router.pathname === menu.link ? styles.active : ''}`} >
 									Profile
 								</div>
 							</Link>
