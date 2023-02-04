@@ -6,6 +6,7 @@ import CalendarEvent from "../models/calendarEvent.model.js";
 // import
 import jwt from "jsonwebtoken";
 import EventRegistration from "../models/eventRegistration.model.js";
+import sendEmail from "../utils/mail.js";
 
 dotenv.config();
 
@@ -145,6 +146,8 @@ const createEvent = async (req, res, next) => {
     });
 
     // send emails all faculty mentors , dean academics, president
+    sendEmail("2002pratham1109@gmail.com");
+    
   } catch (error) {
     next(error);
   }
