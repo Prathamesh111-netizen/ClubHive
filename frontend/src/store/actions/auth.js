@@ -15,6 +15,7 @@ export const authSuccess = (token, user) => {
   localStorage.setItem("token", token);
   // localStorage.setItem("expiresIn", expiresIn);
   localStorage.setItem("user", JSON.stringify(user));
+
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token,
@@ -53,8 +54,10 @@ export const login = ({ email, password }) => {
         .then((res) => {
           console.log(res);
           const token = res.data.token;
-
           const user = res.data.user;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+          window.location.href = "/";
           // const expiresIn = new Date(decoded.exp * 1000);
 
           dispatch(authSuccess(token, user));
