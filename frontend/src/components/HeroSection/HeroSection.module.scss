@@ -9,7 +9,7 @@ $herobg: rgb(241, 241, 241);
   min-height: 70rem;
   width: 100%;
   background: transparent;
-  
+
   @media screen and (max-width: $break-point-tab-lg) {
     flex-direction: column;
     padding-top: calc($navbar-height + 4rem);
@@ -34,7 +34,6 @@ $herobg: rgb(241, 241, 241);
       display: flex;
       align-items: center;
       gap: 4rem;
-      margin-bottom: 2rem;
       width: 100%;
 
       @media screen and (max-width: $break-point-mobile) {

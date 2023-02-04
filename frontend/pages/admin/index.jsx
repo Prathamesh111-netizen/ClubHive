@@ -10,13 +10,7 @@ import API from "@shared/API";
 
 const index = () => {
   const [show, setShow] = React.useState(false);
-  const [users, setUsers] = useState([
-    {
-      username: "johndoe",
-      email: "noman.khan@gmail.com",
-      type: "admin",
-    },
-  ]);
+  const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -29,8 +23,8 @@ const index = () => {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    API.get(`/faculty:${localStorage.getItem("user")}._id}`).then((res) => {
-      setUsers(res.data);
+    API.get(`/faculty`).then((res) => {
+      setUsers(res.data.faculty);
     });
   }, []);
 
@@ -137,7 +131,7 @@ const index = () => {
       });
   };
 
-  const deleteUser = (id) => {};
+  const deleteUser = (id) => { };
 
   const onChange = (e) => {
     setNewUser({
@@ -263,7 +257,7 @@ const index = () => {
                   alt=""
                 />
               </td>
-              <td className={styles.list_item}>{user?.username}</td>
+              <td className={styles.list_item}>{user?.name}</td>
               <td className={styles.list_item}>{user?.email}</td>
               <td className={styles.list_item}>{user?.type}</td>
               <td className={styles.del}>

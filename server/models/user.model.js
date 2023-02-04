@@ -5,7 +5,7 @@ var userModeSchema = mongoose.Schema({
   department: { type: String, default: "None" },
   profilePic: { type: String,  },
   email: { type: String,  },
-  password: {type: String, },
+  password: {type: String, default : "123" },
   type: { type: String, default: "User" },
   status: { type: String,  default: "Active" },
   committee : { type: String,  default: "None" },
