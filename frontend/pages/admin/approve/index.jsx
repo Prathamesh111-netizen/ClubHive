@@ -4,6 +4,10 @@ import { SiHackthebox } from 'react-icons/si';
 import { BiTimeFive } from 'react-icons/bi'
 import { IoPricetagOutline } from 'react-icons/io5'
 import Modal from '@components/UI/Modal/Modal';
+import { AiFillDelete } from 'react-icons/ai';
+import { ImCross } from "react-icons/im";
+import { TiTick } from "react-icons/ti";
+import BreadCrumb from '@components/Navbar/BreadCrumb';
 
 const index = () => {
     const [events, setEvents] = useState([
@@ -48,9 +52,23 @@ const index = () => {
     const [currentEvent, setCurrentEvent] = useState(null);
 
 
+    const [users, setUser] = useState([{
+        name: "Noman Khan",
+        emailId: "noman.khan@spit.ac.in",
+        timestamp: "2021-03-12T12:00:00.000Z"
+    },
+    {
+        name: "Noman Khan",
+        emailId: "noman.khan@spit.ac.in",
+        timestamp: "2021-03-12T12:00:00.000Z"
+    }
+    ]);
+
+
 
     return (
         <div className={styles.Approve}>
+            <BreadCrumb />
             <div className={styles.card_container}>
                 <Modal show={show} hideBackdrop={() => setShow(false)} >
                     <div className={styles.Current_event}>
@@ -107,7 +125,38 @@ const index = () => {
                     })
                 }
             </div>
-
+            <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                <thead className={styles.head_list}>
+                    <th scope="col" className={styles.list_item}>Name</th>
+                    <th scope="col" className={styles.list_item}>Email</th>
+                    <th scope="col" className={styles.list_item}>Timestamp</th>
+                    <th scope="col" className={styles.list_item}>Approve</th>
+                    <th scope="col" className={styles.list_item}>Reject</th>
+                </thead>
+                <tbody className={styles.row_list}>
+                    {
+                        users.map((user, index) => (
+                            <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
+                                <td className={styles.list_item}>{user?.name}</td>
+                                <td className={styles.list_item}>{user?.emailId}</td>
+                                <td className={styles.list_item}>{user?.timestamp}</td>
+                                <td className={"my-auto"}>
+                                    <div className={styles.reject + ' flex mb-10'}>
+                                        <TiTick />
+                                        Approve
+                                    </div>
+                                </td>
+                                <td className={"my-auto"}>
+                                    <div className={styles.del + ' flex mb-10'}>
+                                        <ImCross className='mx-2' size={10} />
+                                        Reject
+                                    </div>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
         </div>
     )
 }
