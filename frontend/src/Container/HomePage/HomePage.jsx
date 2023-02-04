@@ -4,7 +4,7 @@ import styles from './HomePage.module.scss';
 
 const HomePage = () => {
     return (
-        <div className={styles.Home_page + " Container padding_top_nav"}>
+        <div className={styles.Home_page + " Container"}>
             <HeroSection />
         </div>
     )

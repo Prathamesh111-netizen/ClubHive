@@ -10,13 +10,7 @@ import API from "@shared/API";
 
 const index = () => {
   const [show, setShow] = React.useState(false);
-  const [users, setUsers] = useState([
-    {
-      username: "johndoe",
-      email: "noman.khan@gmail.com",
-      type: "admin",
-    },
-  ]);
+  const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -137,7 +131,7 @@ const index = () => {
       });
   };
 
-  const deleteUser = (id) => {};
+  const deleteUser = (id) => { };
 
   const onChange = (e) => {
     setNewUser({
