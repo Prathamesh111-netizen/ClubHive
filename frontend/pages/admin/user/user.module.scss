@@ -1,6 +1,6 @@
 @import "@assets/styles/variables.scss";
 
-.Approve {
+.User {
   padding: 0 2rem;
 
   .card_container {
@@ -8,6 +8,19 @@
     grid-template-columns: repeat(auto-fit, minmax(39rem, 1fr));
     grid-gap: 2rem;
     margin-top: 2rem;
+  }
+
+  .btn_primary {
+    font-size: 1.4rem;
+    padding: 0.6rem 3rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: $primary-blue;
+    width: max-content;
+    height: max-content;
+    color: $neutral-000;
   }
 
   .head_list {
