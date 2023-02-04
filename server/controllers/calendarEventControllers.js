@@ -9,6 +9,7 @@ const getEvents = async (req, res, next) => {
   try {
     if (!committeeName || committeeName === "global") {
       let roomNames = await Room.find({}, { roomNo: 1, _id: 0 });
+      roomNames = roomNames.map((room) => room.roomNo);
       let calendarEvents = await CalendarEvent.find({});
       let globalEvents = [];
       globalEvents = calendarEvents.filter((event) => {
