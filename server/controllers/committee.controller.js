@@ -16,7 +16,7 @@ const getAllCommittee = async (req, res) => {
 
 const getCommitteeById = async (req, res) => {
   try {
-    const {committeeId} = req.params;
+    const { committeeId } = req.params;
     const committee = await Committee.findById(committeeId);
     res.status(200).json({
       success: true,
@@ -35,7 +35,7 @@ const createCommittee = async (req, res) => {
       description,
       presidentEmail,
       profilePic,
-      type
+      type,
     });
     res.status(201).json({
       success: true,
@@ -85,27 +85,16 @@ const updateCommittee = async (req, res) => {
 };
 
 const deleteCommittee = async (req, res) => {
-  const { committeeId } = req.params;
-  Committee.findByIdAndDelete(committeeId)
-    .then((committee) => {
-      if (committee) {
-        return res.status(200).json({
-          success: true,
-          message: "Committee deleted successfully",
-        });
-      } else {
-        return res.status(404).json({
-          success: false,
-          message: "Committee not found",
-        });
-      }
-    })
-    .catch((error) => {
-      return res.status(400).json({
-        success: false,
-        error,
-      });
+  try {
+    const { committeeId } = req.params;
+    Committee.findByIdAndDelete(committeeId);
+    return res.status(200).json({
+      success: true,
+      message: "Committee deleted successfully",
     });
+  } catch (error) {
+    res.status(404).json({ success: false, message: error.message });
+  }
 };
 
 export {

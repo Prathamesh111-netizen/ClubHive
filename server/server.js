@@ -15,7 +15,6 @@ import FacultyRoutes from "./routes/faculty.routes.js";
 // import productRoutes from "./routes/productRoutes.js";
 dotenv.config();
 const app = express();
-
 // use morgan in development mode
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
@@ -53,6 +52,7 @@ app.use("/api/calendar", calendarRoutes);
 app.use("/api/event", EventRoutes);
 app.use("/api/committee", CommitteeRoutes);
 app.use("/api/faculty", FacultyRoutes);
+
 
 app.get("/", (req, res) => {
   res.json({ status: "ok" });

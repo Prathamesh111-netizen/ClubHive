@@ -4,8 +4,8 @@ dotenv.config();
 
 const registerFaculty = async (req, res, next) => {
   try {
-    var { name, email, profilePic, type } = req.body;
-    console.log({ name, email, profilePic, type });
+    const { name, email, profilePic, type } = req.body;
+
     if (name && email && profilePic && type) {
       const faculty = await Faculty.create({
         name,
@@ -26,6 +26,21 @@ const registerFaculty = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+const getFacultyById = async (req, res, next) => {
+  const { facultyId } = req.params;
+  const faculty = await Faculty.findById(facultyId);
+  if (!faculty) {
+    res.status(400).json({
+      success: false,
+      message: "Faculty not found",
+    });
+  }
+  res.status(200).json({
+    success: true,
+    faculty: faculty,
+  });
 };
 
 const getFaculty = async (req, res, next) => {
@@ -51,4 +66,4 @@ const deleteFaculty = async (req, res, next) => {
   });
 };
 
-export { registerFaculty, getFaculty, deleteFaculty };
+export { registerFaculty, getFaculty, deleteFaculty, getFacultyById };
