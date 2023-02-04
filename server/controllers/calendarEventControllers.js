@@ -1,6 +1,7 @@
 dotenv.config();
 import dotenv from "dotenv";
 import CalendarEvent from "../models/calendarEvent.model.js";
+import Room from "../models/room.model.js";
 
 const getEvents = async (req, res, next) => {
   const { committeeName } = req.query;
@@ -18,8 +19,6 @@ const getEvents = async (req, res, next) => {
       events = globalEvents;
     } else {
       events = await CalendarEvent.find({ committeeName: committeeName });
-      console.log("events in get");
-      console.log(events);
     }
     return res
       .status(200)

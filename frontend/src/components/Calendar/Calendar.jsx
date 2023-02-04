@@ -216,12 +216,16 @@ function Calendar(props) {
 
   const onEventClick = React.useCallback(
     (args) => {
-      setEdit(true);
-      setTempEvent({ ...args.event });
-      // fill popup form with event data
-      loadPopupForm(args.event);
-      setAnchor(args.domEvent.target);
-      setOpen(true);
+      console.log('props.committeeName !== "global"');
+      console.log(props.committeeName !== "global");
+      if (props.committeeName !== "global") {
+        setEdit(true);
+        setTempEvent({ ...args.event });
+        // fill popup form with event data
+        loadPopupForm(args.event);
+        setAnchor(args.domEvent.target);
+        setOpen(true);
+      }
     },
     [loadPopupForm]
   );
@@ -376,7 +380,7 @@ function Calendar(props) {
   };
 
   if (isLoading) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
 
   return (

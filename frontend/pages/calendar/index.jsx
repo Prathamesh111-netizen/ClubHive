@@ -3,7 +3,11 @@ import React from "react";
 import styles from "./calendar.module.scss";
 
 const Calendarr = () => {
-  return <Calendar committeeName="global" />;
+  return (
+    <div className="m-24">
+      <Calendar committeeName="global" />
+    </div>
+  );
 };
 
 export default Calendarr;
