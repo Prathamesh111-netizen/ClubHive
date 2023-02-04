@@ -29,7 +29,7 @@ const index = () => {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    API.get(`/faculty:${localStorage.getItem("user")}._id}`).then((res) => {
+    API.get(`/faculty`).then((res) => {
       setUsers(res.data);
     });
   }, []);

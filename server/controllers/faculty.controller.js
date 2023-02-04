@@ -55,12 +55,12 @@ const getFaculty = async (req, res, next) => {
   try {
     const faculty = await Faculty.find({});
     if (!faculty) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "Faculty not found",
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       faculty: faculty,
     });
