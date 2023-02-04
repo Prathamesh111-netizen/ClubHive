@@ -76,7 +76,7 @@ function Calendar(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/calendar/get-events", {
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/calendar/get-events`, {
         params: {
           committeeName: props.committeeName,
         },
@@ -364,7 +364,7 @@ function Calendar(props) {
   const updateEvents = () => {
     //update in backend
     axios
-      .put("http://localhost:8000/api/calendar/update-events", {
+      .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/calendar/update-events`, {
         data: {
           events: myEvents,
           committeeName: props.committeeName,
