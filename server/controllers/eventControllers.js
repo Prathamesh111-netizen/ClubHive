@@ -3,6 +3,7 @@ import Event from "../models/event.model.js";
 import Approval from "../models/Approval.model.js";
 import Room from "../models/room.model.js";
 import CalendarEvent from "../models/calendarEvent.model.js";
+// import 
 
 dotenv.config();
 
@@ -36,6 +37,26 @@ const getEvent = async (req, res, next) => {
     next(error);
   }
 };
+
+const getEventByCategory = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    const events = Event.find({ category: category });
+    if (!events) {
+      res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      events: events,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 const getEventByCommittee = async (req, res, next) => {
   try {
@@ -104,7 +125,8 @@ const createEvent = async (req, res, next) => {
       success: true,
       event: event,
     });
-    
+
+    // send emails all faculty mentors , dean academics, president
   } catch (error) {
     next(error);
   }
@@ -258,5 +280,6 @@ export {
   updateEvent,
   deleteEvent,
   ApprovalStatus,
-  getEventByCommittee
+  getEventByCommittee,
+  getEventByCategory
 };
