@@ -1,5 +1,6 @@
 import HomePage from "@Container/HomePage/HomePage";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Home() {
   const [image, setImage] = useState("");
