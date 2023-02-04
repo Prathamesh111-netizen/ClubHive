@@ -66,15 +66,15 @@ export const login = ({ email, password }) => {
 	};
 };
 
-export const signup = ({ email, password, userName, image }) => {
+export const signup = ({ email, password, name, profilePic }) => {
 	return (dispatch) => {
 		dispatch(authStart());
 		try {
 			API.post(`/user/register`, {
 				email: email,
 				password: password,
-				userName: userName,
-				profilePic: image,
+				name: name,
+				profilePic: profilePic,
 			}).then((res) => {
 				let user = res.data.user;
 				console.log(res.data.user);
