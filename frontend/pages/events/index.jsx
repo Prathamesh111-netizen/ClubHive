@@ -203,18 +203,6 @@ const index = () => {
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
-            <div className={styles.description}>
-              <h1>About The Event</h1>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html:
-                    currentActiveEvent?.description ||
-                    "<h3>Description ABout Hackathon here</h3>",
-                }}
-                className={styles.HTML}
-              />
-=======
             <div className={styles.right_container + " hide_scrollbar"}>
                 {
                     loading ? <h1>Loading...</h1> : ""
@@ -262,7 +250,6 @@ const index = () => {
                     ) : ""
                 }
 
->>>>>>> 2141055574b75aa2bd79e507e76d80354827bbaf
             </div>
           </>
         ) : (
