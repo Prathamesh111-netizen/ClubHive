@@ -141,7 +141,16 @@ const index = () => {
       });
   };
 
-  const deleteCommittee = (id) => {};
+  const deleteCommittee = (id) => {
+    API.delete(`/committee/${id}`)
+      .then((res) => {
+        console.log(res);
+        setCommittees(committees.filter((committee) => committee._id !== id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onChange = (e) => {
     setNewCommittee({ ...newCommittee, [e.target.name]: e.target.value });
@@ -280,7 +289,13 @@ const index = () => {
               <td className={styles.list_item}>{user?.name}</td>
               <td className={styles.list_item}>{user?.presidentEmail}</td>
               <td className={styles.list_item}>{user?.type}</td>
-              <td onClick={deleteCommittee} className={styles.del}>
+              <td
+                onClick={() => {
+                  // console.log(user._id);
+                  deleteCommittee(user._id);
+                }}
+                className={styles.del}
+              >
                 <AiFillDelete />
                 Delete
               </td>
