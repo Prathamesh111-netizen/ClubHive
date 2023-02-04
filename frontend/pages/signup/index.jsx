@@ -12,9 +12,9 @@ const Signup = () => {
 	const user = useSelector(state => state.auth.user);
 	const [signupData, setSignupData] = useState({
 		email: "",
-		userName: "",
+		name: "",
 		password: "",
-		image: null,
+		profilePic: null,
 	});
 	const fileRef = useRef();
 	const dragRef = useRef(null);
@@ -33,9 +33,26 @@ const Signup = () => {
 	}, [user])
 
 	const updateSignupData = async () => {
-		if (files.length > 0) {
-			let imageUrl = await uploadImage(files[0]);
-			setSignupData({ ...signupData, image: imageUrl });
+		try {
+			if (files.length > 0) {
+				const data = new FormData();
+				data.append("file", files[0]);
+				data.append("upload_preset", "itlab_image_store_preset");
+				data.append("cloud_name", "dl8hmamey");
+				fetch("  https://api.cloudinary.com/v1_1/dl8hmamey/image/upload", {
+					method: "post",
+					body: data,
+				})
+					.then((resp) => resp.json())
+					.then((data) => {
+						setSignupData({ ...signupData, profilePic: data.url });
+					})
+					.catch((err) => console.log(err));
+
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error('Something went wrong');
 		}
 	}
 
@@ -48,8 +65,8 @@ const Signup = () => {
 			dispatch(actions.signup({
 				email: signupData.email,
 				password: signupData.password,
-				userName: signupData.userName,
-				image: signupData.image,
+				name: signupData.name,
+				profilePic: signupData.profilePic,
 			}));
 		}
 	}
@@ -145,7 +162,7 @@ const Signup = () => {
 					</div>
 					<div className={styles.input_container}>
 						<label htmlFor="email">Username</label>
-						<input type="text" name='userName' onChange={signupInputHandler} value={signupData.username} />
+						<input type="text" name='name' onChange={signupInputHandler} value={signupData.username} />
 					</div>
 					<div className={styles.input_container}>
 						<label htmlFor="password">Password</label>

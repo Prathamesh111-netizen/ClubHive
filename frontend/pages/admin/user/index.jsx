@@ -1,6 +1,7 @@
 import BreadCrumb from "@components/Navbar/BreadCrumb";
 import API from "@shared/API";
-import { useState } from "react";
+import { LoaderContext } from "pages/_app";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./user.module.scss"
 
@@ -10,8 +11,11 @@ export default function Users() {
     ])
     const user = useSelector(state => state.auth.user);
 
+    const {loading, setLoading} = useContext(LoaderContext);
+
     const getMembers = async () => {
         try {
+            setLoading(true);
             console.log(user);
             const response = await API.get("/comm_members", {
                 headers: {
@@ -27,9 +31,14 @@ export default function Users() {
             console.log(error);
         }
         finally {
-
+            setLoading(false);
         }
     }
+
+    useEffect(() => {
+        getMembers();
+    }, []);
+
 
     const [show, setShow] = useState(false);
 

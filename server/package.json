@@ -25,7 +25,9 @@
     "razorpay": "^2.8.4",
     "shortid": "^2.2.16",
     "socket.io": "^4.5.4",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/mongoose": "^5.11.97"

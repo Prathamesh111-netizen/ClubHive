@@ -11,14 +11,13 @@ const index = () => {
     const [show, setShow] = React.useState(false);
     const [users, setUsers] = useState([
         {
-
             username: 'johndoe',
             email: "noman.khan@gmail.com",
             type: "admin",
         }
     ]);
     const [newUser, setNewUser] = useState({
-        username: '',
+        name: '',
         email: '',
         type: '',
         profilePic: ''
@@ -144,18 +143,19 @@ const index = () => {
                     <form className="flex flex-col gap-5 mt-5">
                         <div className={styles.form_item}>
                             <label htmlFor="username" placeholder='Username'>Username</label>
-                            <input type="text" name="username" value={newUser.username} onChange={onChange} id="username" />
+                            <input type="text" name="name" onChange={onChange} id="username" />
                         </div>
                         <div className={styles.form_item}>
                             <label htmlFor="email" placeholder='User Email'>Email</label>
-                            <input type="email" value={newUser.email} onChange={onChange} name="email" id="email" />
+                            <input type="email" onChange={onChange} name="email" id="email" />
                         </div>
                         <div className={styles.form_item}>
                             <label htmlFor="type">Type</label>
                             <select name="type" id="type" onChange={onChange}>
-                                <option value="admin">Admin</option>
-                                <option value="faculty">Faculty</option>
-                                <option value="student">Student</option>
+                                <option value="Member">Member</option>
+                                <option value="President">President</option>
+                                <option value="Dean Academics">Dean Academics</option>
+                                <option value="Mentor">Mentor</option>
                             </select>
                         </div>
                         <div className={styles.file_upload}>

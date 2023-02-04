@@ -6,8 +6,10 @@ var userModeSchema = mongoose.Schema({
   profilePic: { type: String,  },
   email: { type: String,  },
   password: {type: String, },
-  role: { type: String, default: "User" },
+  type: { type: String, default: "User" },
   status: { type: String,  default: "Active" },
+  committee : { type: String,  default: "None" },
+  deviceToken : { type: String,  default: ""},
   createdDate: { type: Date, default: Date.now },
   updatedDate: { type: Date, default: Date.now },
 })

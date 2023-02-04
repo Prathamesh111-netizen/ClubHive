@@ -15,6 +15,7 @@ import {
 } from "@mobiscroll/react";
 import axios from "axios";
 import Loader from "@components/Loader/Loader";
+import API from "@shared/API";
 
 setOptions({
   theme: "ios",
@@ -75,12 +76,11 @@ function Calendar(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/calendar/get-events`, {
-        params: {
-          committeeName: props.committeeName,
-        },
-      })
+    API.get(`/calendar/get-events`, {
+      params: {
+        committeeName: props.committeeName,
+      },
+    })
       .then((res) => {
         setIsLoading(false);
         console.log("res.data.events");
@@ -216,12 +216,16 @@ function Calendar(props) {
 
   const onEventClick = React.useCallback(
     (args) => {
-      setEdit(true);
-      setTempEvent({ ...args.event });
-      // fill popup form with event data
-      loadPopupForm(args.event);
-      setAnchor(args.domEvent.target);
-      setOpen(true);
+      console.log('props.committeeName !== "global"');
+      console.log(props.committeeName !== "global");
+      if (props.committeeName !== "global") {
+        setEdit(true);
+        setTempEvent({ ...args.event });
+        // fill popup form with event data
+        loadPopupForm(args.event);
+        setAnchor(args.domEvent.target);
+        setOpen(true);
+      }
     },
     [loadPopupForm]
   );
@@ -363,22 +367,20 @@ function Calendar(props) {
 
   const updateEvents = () => {
     //update in backend
-    axios
-      .put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/calendar/update-events`, {
-        data: {
-          events: myEvents,
-          committeeName: props.committeeName,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          alert("success");
-        }
-      });
+    API.put(`/calendar/update-events`, {
+      data: {
+        events: myEvents,
+        committeeName: props.committeeName,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        alert("success");
+      }
+    });
   };
 
   if (isLoading) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
 
   return (

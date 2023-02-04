@@ -29,53 +29,74 @@ const registerUser = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
-  if (email && password) {
-    const user = await User.findOne({ email });
-    console.log(user);
-    if (!user) {
-      res.status(401).json({
+  try {
+    const { email, password } = req.body;
+    if (email && password) {
+      const user = await User.findOne({ email });
+      console.log(user);
+      if (!user) {
+        res.status(401).json({
+          success: false,
+          message: "Invalid credentials",
+        });
+      }
+
+      const isMatch = user.password == password;
+      if (!isMatch) {
+        return res.status(401).json({
+          success: false,
+          message: "Invalid credentials",
+        });
+      }
+
+      const token = generateToken(user._id);
+      return res.status(200).json({
+        success: true,
+        message: "Correct credentials",
+        token: token,
+        user: user,
+      });
+    } else {
+      res.status(400).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Please fill all the fields",
       });
     }
-
-    const isMatch = user.password == password;
-    if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid credentials",
-      });
-    }
-
-    const token = generateToken(user._id);
-    return res.status(200).json({
-      success: true,
-      message: "Correct credentials",
-      token: token,
-      user: user,
-    });
-  } else {
-    res.status(400).json({
-      success: false,
-      message: "Please fill all the fields",
-    });
+  } catch (error) {
+    next(error);
   }
 };
 
 const getUser = (req, res, next) => {
-  const { userId } = req.params;
-  const user = User.findById(userId);
-  if (!user) {
-    res.status(404).json({
-      success: false,
-      message: "User not found",
+  try {
+    const { userId } = req.params;
+    const user = User.findById(userId);
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      user: user,
     });
+  } catch (error) {
+    next(error);
   }
-  res.status(200).json({
-    success: true,
-    user: user,
-  });
 };
 
-export { registerUser, login, getUser };
+const setFCMToken = async (req, res, next) => {
+  try {
+    const { name, deviceToken } = req.body.data;
+    await User.findOneAndUpdate({ name: name }, { deviceToken: deviceToken });
+    res.status(200).json({
+      success: true,
+      message: "Device token updated",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { registerUser, login, getUser, setFCMToken };
