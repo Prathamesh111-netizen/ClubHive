@@ -13,7 +13,7 @@ const getAllEvent = async (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.decode(token);
 
-    var events = await Event.find({});
+    var events = await Event.find({approvalStatus : "Approved"});
     
     const finalevents = [];
     events.forEach(async (event) => {
