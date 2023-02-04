@@ -6,14 +6,15 @@ import styles from './events.module.scss'
 
 const index = () => {
     const [events, setEvents] = useState([]);
-
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
     useEffect(() => {
         getEvents();
     }, [])
 
     const getEvents = async () => {
         try {
-            const res = await API.get('/event/comm/');
+            const res = await API.get(`/event/comm/`);
             setEvents(res.data);
         } catch (error) {
             console.log(error);
