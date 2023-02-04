@@ -5,6 +5,7 @@ var Document = mongoose.Schema({
   description: { type: String },
   presidentEmail : { type: String },
   profilePic: { type: String },
+  type : { type: String, default: "committee"},
   status : { type: String, default: "active"},
   created: { type: Date, default: Date.now },
   updated: { type: Date, default: Date.now },
