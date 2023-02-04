@@ -7,7 +7,7 @@ import {
   deleteEvent,
   ApprovalStatus,
   getEventByCommittee,
-  getEventByCategory
+  getEventByCategory,
 } from "../controllers/eventControllers.js";
 
 import {
@@ -24,14 +24,13 @@ router.route("/approve/:eventId").post(ApproveEvent);
 
 router.route("/reject/:eventId").post(disApproveEvent);
 
-router.route("/comm/:committee").get(getEventByCommittee);
+router.route("/comm").get(getEventByCommittee);
 
 router.route("/ApprovalStatus/:eventId").get(ApprovalStatus);
 
 router.route("/category/:category").get(getEventByCategory);
 
 router.route("/:eventId").get(getEvent).put(updateEvent).delete(deleteEvent);
-
 
 router.route("/").get(getAllEvent).post(createEvent);
 

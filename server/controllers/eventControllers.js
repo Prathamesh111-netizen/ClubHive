@@ -3,7 +3,7 @@ import Event from "../models/event.model.js";
 import Approval from "../models/Approval.model.js";
 import Room from "../models/room.model.js";
 import CalendarEvent from "../models/calendarEvent.model.js";
-// import 
+// import
 
 dotenv.config();
 
@@ -57,11 +57,10 @@ const getEventByCategory = async (req, res, next) => {
   }
 };
 
-
 const getEventByCommittee = async (req, res, next) => {
   try {
-    const { committee } = req.params;
-    const event = await Event.find({committee : committee});
+    const { committee } = req.query;
+    const event = await Event.find({ committee: committee });
     if (!event) {
       res.status(404).json({
         success: false,
@@ -146,7 +145,7 @@ const updateEvent = async (req, res, next) => {
       budget,
       prize,
       rooms,
-      category
+      category,
     } = req.body;
 
     const event = await Event.findById(eventId);
@@ -181,7 +180,7 @@ const updateEvent = async (req, res, next) => {
           budget,
           prize,
           rooms,
-          category
+          category,
         },
         { new: true }
       );
@@ -254,12 +253,11 @@ const ApprovalStatus = async (req, res, next) => {
       // const newRoom = [];
       // const calendarEvents = CalendarEvent.find({});
       // for(let event in calendarEvents) {
-        
+
       // }
       // for(let room in rooms) {
       //   roomByType[room.type].push(room);
       // }
-      
     }
 
     res.status(200).json({
@@ -280,5 +278,5 @@ export {
   deleteEvent,
   ApprovalStatus,
   getEventByCommittee,
-  getEventByCategory
+  getEventByCategory,
 };

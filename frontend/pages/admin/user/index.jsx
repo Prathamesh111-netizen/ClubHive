@@ -16,7 +16,7 @@ export default function Users() {
   const getMembers = async () => {
     try {
       setLoading(true);
-      const response = await API.get("/comm_members", {
+      API.get("/comm_members", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -26,8 +26,8 @@ export default function Users() {
       }).then((res) => {
         console.log(res);
         setLoading(false);
+        setMembers(res.data.members);
       });
-      setMembers(response.data.members);
     } catch (error) {
       setLoading(false);
       console.log(error);
