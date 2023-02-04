@@ -8,6 +8,8 @@ import { SiHackthebox } from "react-icons/si";
 import { BiTimeFive } from "react-icons/bi";
 import { IoPricetagOutline } from "react-icons/io5";
 import Modal from "@components/UI/Modal/Modal";
+import { AiOutlinePlus } from "react-icons/ai";
+import Link from "next/link";
 
 const index = () => {
   const [events, setEvents] = useState([]);
@@ -19,12 +21,10 @@ const index = () => {
     getEvents();
   }, []);
 
-  const { loading, setLoading } = useContext(LoaderContext);
+  const [loading, setLoading] = useState(true);
 
   const getEvents = async () => {
     try {
-      console.log("user.committee");
-      console.log(user.committee);
       setLoading(true);
       API.get(`/event/comm/`, {
         params: {
@@ -49,6 +49,13 @@ const index = () => {
 
   return (
     <div className={styles.Event}>
+      <Link href="/admin/event/create">
+        <div className={styles.add_btn}>
+          <AiOutlinePlus />
+          Add Event
+        </div>
+      </Link>
+      {loading ? <h2>Loading...</h2> : ""}
       <div className={styles.card_container}>
         <Modal show={show} hideBackdrop={() => setShow(false)}>
           <div className={styles.Current_event}>
