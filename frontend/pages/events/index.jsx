@@ -203,6 +203,7 @@ const index = () => {
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
             <div className={styles.description}>
               <h1>About The Event</h1>
               <div
@@ -213,6 +214,55 @@ const index = () => {
                 }}
                 className={styles.HTML}
               />
+=======
+            <div className={styles.right_container + " hide_scrollbar"}>
+                {
+                    loading ? <h1>Loading...</h1> : ""
+                }
+                {
+                    currentActiveEvent ? (
+                        <>
+                            <div className={styles.header}>
+                                <img src={currentActiveEvent.img || "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"} alt="" />
+                                <div className={styles.right}>
+                                    <h2>{currentActiveEvent.title || "CSI Hackathon"}</h2>
+                                    <p>Hosted by {currentActiveEvent.committee || "CSI SPIT"}</p>
+                                    <div className={styles.info}>
+                                        <div className={styles.event_type}>
+                                            <SiHackthebox />
+                                            {currentActiveEvent.type || "Hackathon"}
+                                        </div>
+                                        <span></span>
+                                        <div className={styles.event_date}>
+                                            <BiTimeFive />
+                                            {
+                                                currentActiveEvent.startDate === "" ? "12-03-2021 | 13-03-2021" : `${currentActiveEvent.startDate} | ${currentActiveEvent.endDate}`
+                                            }
+
+                                        </div>
+                                        <span></span>
+                                        <div className={styles.price}>
+                                            <IoPricetagOutline />
+                                            Free
+                                        </div>
+                                    </div>
+                                    <div className={styles.utils}>
+                                        <div className={styles.btn_primary}>
+                                            Register
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.description}>
+                                <h1>About The Event</h1>
+                                <div dangerouslySetInnerHTML={{ __html: currentActiveEvent?.description || '<h3>Description ABout Hackathon here</h3>' }} className={styles.HTML} />
+                            </div>
+                        </>
+
+                    ) : ""
+                }
+
+>>>>>>> 2141055574b75aa2bd79e507e76d80354827bbaf
             </div>
           </>
         ) : (

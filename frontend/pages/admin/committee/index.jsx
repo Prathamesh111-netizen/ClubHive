@@ -1,27 +1,38 @@
-import Modal from '@components/UI/Modal/Modal';
-import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
-import styles from './committee.module.scss';
-import { AiOutlinePlus, AiFillDelete } from 'react-icons/ai';
-import BreadCrumb from '@components/Navbar/BreadCrumb';
-import { uploadImage } from '@shared/utility';
+import Modal from "@components/UI/Modal/Modal";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import styles from "./committee.module.scss";
+import { AiOutlinePlus, AiFillDelete } from "react-icons/ai";
+import BreadCrumb from "@components/Navbar/BreadCrumb";
+import { uploadImage } from "@shared/utility";
+import API from "@shared/API";
 
 const index = () => {
   const [show, setShow] = React.useState(false);
   const [committees, setCommittees] = useState([
     {
-      name: 'johndoe',
+      name: "johndoe",
       presidentEmail: "noman.khan@gmail.com",
       type: "admin",
-      created: '',
-    }
-  ])
+      created: "",
+    },
+  ]);
+
+  useEffect(() => {
+    API.get(`/committee`).then((res) => {
+      console.log("res.data.committee");
+      console.log(res.data.committee);
+      setCommittees(res.data.committee);
+    });
+  }, []);
+
   const [newCommittee, setNewCommittee] = useState({
-    name: '',
-    presidentEmail: '',
-    type: '',
-    profilePic: ''
-  })
+    name: "",
+    presidentEmail: "",
+    type: "Technical",
+    profilePic: "",
+    description: "",
+  });
   const fileRef = useRef();
   const dragRef = useRef(null);
   const [prevImg, setPrevImg] = useState();
@@ -47,14 +58,12 @@ const index = () => {
             setNewCommittee({ ...newCommittee, profilePic: data.url });
           })
           .catch((err) => console.log(err));
-
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      toast.error("Something went wrong");
     }
-
-  }
+  };
 
   const handleFileBtnClick = () => {
     fileRef.current.click();
@@ -119,41 +128,68 @@ const index = () => {
     dragRef.current.classList.remove("uploading");
   };
 
-
   const addCommittee = (e) => {
-    e.preventDefault();
-    console.log(newCommittee);
-  }
+    setCommittees([...committees, newCommittee]);
+    API.post("/committee", newCommittee)
+      .then((res) => {
+        console.log(res);
+        setShow(false);
+      })
+      .catch((err) => {
+        console.log(res);
+        setShow(false);
+      });
+  };
 
-  const deleteCommittee = (id) => {
-
-  }
+  const deleteCommittee = (id) => {};
 
   const onChange = (e) => {
     setNewCommittee({ ...newCommittee, [e.target.name]: e.target.value });
-  }
+  };
 
   return (
     <div className={styles.Committee}>
       <Modal show={show} hideBackdrop={() => setShow(false)} name="add-user">
         <div className={styles.User_form}>
-          <h1 className="text-2xl font-bold">Add User</h1>
+          <h1 className="text-2xl font-bold">Add Committee</h1>
           <form className="flex flex-col gap-5 mt-5">
             <div className={styles.form_item}>
               <label htmlFor="name">Committee Name</label>
-              <input type="text" onChange={onChange} name="name" placeholder='Committee Name' id="username" />
+              <input
+                type="text"
+                onChange={onChange}
+                name="name"
+                placeholder="Committee Name"
+                id="username"
+              />
             </div>
             <div className={styles.form_item}>
               <label htmlFor="presidentEmail">President Email</label>
-              <input type="email" onChange={onChange} name="presidentEmail" id="email" placeholder='Presidents Email' />
+              <input
+                type="email"
+                onChange={onChange}
+                name="presidentEmail"
+                id="email"
+                placeholder="Presidents Email"
+              />
+            </div>
+            <div className={styles.form_item}>
+              <label htmlFor="presidentEmail">Description</label>
+              <input
+                type="text"
+                onChange={onChange}
+                name="description"
+                id="description"
+                placeholder="Description"
+              />
             </div>
             <div className={styles.form_item}>
               <label htmlFor="type">Type</label>
               <select name="type" id="type" onChange={onChange}>
-                <option value="admin">Technical</option>
-                <option value="faculty">Cultural</option>
-                <option value="student">Esports</option>
-                <option value="student">Sports</option>
+                <option value="Technical">Technical</option>
+                <option value="Cultural">Cultural</option>
+                <option value="Esports">Esports</option>
+                <option value="Sports">Sports</option>
               </select>
             </div>
             <div className={styles.file_upload}>
@@ -168,7 +204,10 @@ const index = () => {
                   >
                     <h2>Drag & Drop your profile photo here</h2>
                     <span>OR</span>
-                    <div className={styles.browse_btn} onClick={handleFileBtnClick}>
+                    <div
+                      className={styles.browse_btn}
+                      onClick={handleFileBtnClick}
+                    >
                       Browse Files
                     </div>
                     <input
@@ -188,47 +227,69 @@ const index = () => {
                 </div>
               )}
             </div>
-            <button onClick={addCommittee} className={styles.btn_primary}>Add Committee</button>
+            <button onClick={addCommittee} className={styles.btn_primary}>
+              Add Committee
+            </button>
           </form>
         </div>
       </Modal>
       <BreadCrumb />
       <div className="flex flex-row justify-between my-5">
         <h1>Faculty Instructor Accounts</h1>
-        <button onClick={() => {
-          setShow(true);
-        }} className={styles.btn_primary}>Add Committee</button>
+        <button
+          onClick={() => {
+            setShow(true);
+          }}
+          className={styles.btn_primary}
+        >
+          Add Committee
+        </button>
       </div>
       <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
         <thead className={styles.head_list}>
-          <th scope="col" className={styles.list_item}>Committee</th>
-          <th scope="col" className={styles.list_item}>Name</th>
-          <th scope="col" className={styles.list_item}>President</th>
-          <th scope="col" className={styles.list_item}>Type Of Work</th>
-          <th scope="col" className={styles.list_item}>Delete</th>
+          <th scope="col" className={styles.list_item}>
+            Committee
+          </th>
+          <th scope="col" className={styles.list_item}>
+            Name
+          </th>
+          <th scope="col" className={styles.list_item}>
+            President
+          </th>
+          <th scope="col" className={styles.list_item}>
+            Type Of Work
+          </th>
+          <th scope="col" className={styles.list_item}>
+            Delete
+          </th>
         </thead>
         <tbody className={styles.row_list}>
-          {
-            committees.map((user, index) => (
-              <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
-                <td className={styles.list_item}>
-                  <img src={"https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"} alt="" />
-                </td>
-                <td className={styles.list_item}>{user?.name}</td>
-                <td className={styles.list_item}>{user?.presidentEmail}</td>
-                <td className={styles.list_item}>{user?.type}</td>
-                <td onClick={deleteCommittee} className={styles.del}>
-                  <AiFillDelete />
-                  Delete
-                </td>
-              </tr>
-
-            ))
-          }
+          {committees.map((user, index) => (
+            <tr
+              key={index}
+              className="border-b border-gray-200 hover:bg-gray-50"
+            >
+              <td className={styles.list_item}>
+                <img
+                  src={
+                    "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
+                  }
+                  alt=""
+                />
+              </td>
+              <td className={styles.list_item}>{user?.name}</td>
+              <td className={styles.list_item}>{user?.presidentEmail}</td>
+              <td className={styles.list_item}>{user?.type}</td>
+              <td onClick={deleteCommittee} className={styles.del}>
+                <AiFillDelete />
+                Delete
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default index
+export default index;
