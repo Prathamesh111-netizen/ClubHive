@@ -82,7 +82,7 @@ const index = () => {
                                     <span></span>
                                     <div className={styles.price}>
                                         <IoPricetagOutline />
-                                        Free
+                                        ₹100
                                     </div>
                                 </div>
                             </div>
