@@ -30,7 +30,7 @@ const index = () => {
 
   useEffect(() => {
     API.get(`/faculty`).then((res) => {
-      setUsers(res.data);
+      setUsers(res.data.faculty);
     });
   }, []);
 
@@ -263,7 +263,7 @@ const index = () => {
                   alt=""
                 />
               </td>
-              <td className={styles.list_item}>{user?.username}</td>
+              <td className={styles.list_item}>{user?.name}</td>
               <td className={styles.list_item}>{user?.email}</td>
               <td className={styles.list_item}>{user?.type}</td>
               <td className={styles.del}>
