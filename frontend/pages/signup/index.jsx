@@ -45,7 +45,6 @@ const Signup = () => {
 				})
 					.then((resp) => resp.json())
 					.then((data) => {
-						console.log(data);
 						setSignupData({ ...signupData, profilePic: data.url });
 					})
 					.catch((err) => console.log(err));
