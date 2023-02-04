@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './calendar.module.scss'
 
-const Calendarr = () => {
+const Calendar = () => {
   return (
     <div className="m-24">
       <Calendar committeeName="global" />
@@ -9,4 +9,4 @@ const Calendarr = () => {
   );
 };
 
-export default calendar
+export default Calendar
