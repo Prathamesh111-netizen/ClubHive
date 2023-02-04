@@ -28,7 +28,7 @@ const AdminSidebar = () => {
     {
       name: "Members",
       icon: <AiFillHome />,
-      link: "/admin/users",
+      link: "/admin/user",
     },
     {
       name: "Events",

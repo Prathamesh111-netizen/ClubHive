@@ -1,4 +1,6 @@
 import BreadCrumb from "@components/Navbar/BreadCrumb";
+import InputField from "@components/UI/InputField";
+import Modal from "@components/UI/Modal/Modal";
 import API from "@shared/API";
 import { LoaderContext } from "pages/_app";
 import { useContext, useEffect, useState } from "react";
@@ -7,11 +9,10 @@ import styles from "./user.module.scss"
 
 export default function Users() {
 
-    const [members, setMembers] = useState([
-    ])
+    const [members, setMembers] = useState([])
     const user = useSelector(state => state.auth.user);
 
-    const {loading, setLoading} = useContext(LoaderContext);
+    const { loading, setLoading } = useContext(LoaderContext);
 
     const getMembers = async () => {
         try {
@@ -26,8 +27,9 @@ export default function Users() {
                 }
 
             })
+            setMembers(response.data.members);
         }
-        catch(error) {
+        catch (error) {
             console.log(error);
         }
         finally {
@@ -58,6 +60,37 @@ export default function Users() {
         )
     }
 
+    const [member, setMember] = useState({
+        email: "",
+        committeeName: user.committee,
+        role: "",
+    })
+
+    const addMember = async () => {
+        try {
+            setLoading(true);
+            const response = await API.post("/comm_members", member, { 
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                }
+            })
+            console.log(response);
+            getMembers();
+        }
+        catch (error) {
+            console.log(error);
+        }
+        finally {
+            setLoading(false);
+            setShow(false);
+            setMember({
+                email: "",
+                committeeName: user.committee,
+                role: "",
+            })
+        }
+    }
+
     return (
         <div className={styles.User + " m-10 text-lg "}>
             <BreadCrumb />
@@ -65,8 +98,34 @@ export default function Users() {
                 <h1 className="text-4xl font-extrabold">Committee Member</h1>
                 <button onClick={() => {
                     setShow(true);
-                }} className={styles.btn_primary}>Add Member</button>
+                }} className={styles.btn_primary + " py-2"}>Add Member</button>
             </div>
+            <Modal show={show} hideBackdrop={() => setShow(false)}>
+                <div className=" w-full">
+                    <InputField
+                        label="Email"
+                        placeholder="noman@gmail.com"
+                        value={member.email}
+                        handleChange={() => (e) => setMember({ ...member, email: e.target.value })}
+                        className=" w-full"
+                    />
+                    <InputField
+                        label={"Committee Name"}
+                        placeholder="CSI"
+                        value={member.committeName}
+                        disable={true}
+                        className=" w-full"
+                        handleChange={() => (e) => setMember({ ...member, committeName: e.target.value })}
+                    />
+                    <InputField
+                        label={"Role"}
+                        placeholder="Tech Head"
+                        value={member.role}
+                        handleChange={() => (e) => setMember({ ...member, role: e.target.value })}
+                    />
+                    <button className={styles.btn_primary + " py-2 mx-auto"} onClick={addMember}>Add Member</button>
+                </div>
+            </Modal>
             <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
                 <thead className={styles.head_list}>
                     <th scope="col" className={styles.list_item}>Email</th>

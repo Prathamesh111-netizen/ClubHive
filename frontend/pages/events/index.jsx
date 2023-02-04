@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './events.module.scss';
 import { SiHackthebox } from 'react-icons/si';
 import { BiTimeFive } from 'react-icons/bi'
 import { IoPricetagOutline } from 'react-icons/io5'
 import API from '@shared/API';
 import { toast } from 'react-toastify';
+import { LoaderContext } from 'pages/_app';
 
 const index = () => {
     const [events, setEvents] = useState([]);
     const [currentActiveEvent, setCurrentActiveEvent] = useState(events.length > 0 && events[0]);
-    const [loading, setLoading] = useState(false);
+    const {loading, setLoading} = useContext(LoaderContext)
 
     useEffect(() => {
         if (events.length > 0) {
