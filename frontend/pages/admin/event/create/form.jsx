@@ -1,11 +1,17 @@
-import BreadCrumb from "@components/Navbar/BreadCrumb";
 import InputField from "@components/UI/InputField";
 import dynamic from "next/dynamic";
 const RichTextEditor = dynamic(() => import('@components/UI/RichTextEditor'), { ssr: false });
+import { LoaderContext } from "pages/_app";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+import API from "@shared/API";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 export default function CreateEvent() {
+
+    const { loading, setLoading } = useContext(LoaderContext);
+    const router = useRouter();
 
     const [event, setEvent] = useState({
         title: "",
@@ -14,21 +20,40 @@ export default function CreateEvent() {
         img: "",
         startTime: "",
         endTime: "",
-        budget: [],
-        prize: [],
+        budget: "",
         startDate: "",
         endDate: "",
         rooms: {
             labs: 0,
             classRoom: 0,
             hall: 0,
-        }
+        },
     });
 
+    const createEvent = async () => {
+        try {
+            setLoading(true);
+            console.log(loading)
+            const res = await API.post("/event", event, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            });
+            toast.success("Event created successfully");
+            router.replace("/events");
+        }
+        catch (err) {
+
+        }
+        finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <div className="w-full">
-            <h1 className="text-2xl font-bold my-5 mb-7">Create Event</h1>
+            <h1 className="text-2xl font-bold my-5 mb-7">{`Create Event ${loading}`}</h1>
             <div className="w-full h-1/2 rounded-md">
                 <div className="flex gap-10">
                     <InputField
@@ -46,10 +71,7 @@ export default function CreateEvent() {
                         placeholder="Enactus"
                         key="event_committee"
                         id="committee"
-                        handleChange={() => (e) => {
-                            console.log(e.target.value)
-                            setEvent({ ...event, commitee: e.target.value })
-                        }}
+                        handleChange={() => (e) => { setEvent({ ...event, commitee: e.target.value }) }}
                         label="Committee Name"
                         value={event.commitee}
                     />
@@ -129,7 +151,12 @@ export default function CreateEvent() {
                     handleChange={() => (e) => { setEvent({ ...event, rooms: { ...event.rooms, hall: e.target.value } }) }}
                 />
             </div>
-            
+            <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={createEvent}
+            >
+                Create Event
+            </button>
         </div>
     )
 }

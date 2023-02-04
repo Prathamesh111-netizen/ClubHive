@@ -4,17 +4,21 @@ import CalendarEvent from "../models/calendarEvent.model.js";
 
 const getEvents = async (req, res, next) => {
   const { committeeName } = req.query;
+  let events = [];
   try {
     if (!committeeName || committeeName === "global") {
       events = await CalendarEvent.find();
     } else {
       events = await CalendarEvent.find({ committeeName: committeeName });
+      console.log("events in get");
+      console.log(events);
     }
     return res
       .status(200)
       .json({ message: "Events fetched successfully", events: events });
   } catch (error) {
-    return res.status(404).json({ message: error.message });
+    console.log(error);
+    return res.status(400).json({ message: error.message });
   }
 };
 
@@ -24,8 +28,18 @@ const updateEvents = async (req, res, next) => {
 
   try {
     events.forEach((event) => {
+      console.log("event before");
+      console.log(event);
+      let date = event._days[0];
+      let tSplit = date.split("T");
+      let dashSplit = tSplit[0].split("-");
+      dashSplit[2] = String(parseInt(dashSplit[2]) + 1);
+      let newDate = dashSplit.join("-");
+      newDate = newDate + "T" + tSplit[1];
+      // console.log(typeof event._days[0]);
+      // console.log(event);
       event.committeeName = committeeName;
-      event._days = event._days[0];
+      event._days = [newDate];
     });
     await CalendarEvent.deleteMany({ committeeName: committeeName });
     await CalendarEvent.insertMany(events);

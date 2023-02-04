@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-var Document = mongoose.Schema({
+var Event = mongoose.Schema({
   title: { type: String,  },
   description : {type : String},
   committee: { type: String, default: "None" },
@@ -9,12 +9,14 @@ var Document = mongoose.Schema({
   endDate : {type : String},
   startTime : {type : String},
   endTime : {type : String},
-  Budget : {type : Object},
-  Prize : {type : String},
+  budget : {type : Object},
+  prize : {type : String},
+  rooms : {type : Object},
+  roomsAllocated : {type : Object, default : {}},
   approvalStatus : {type : String, default : "Pending"},
   createdDate: { type: Date, default: Date.now },
   updatedDate: { type: Date, default: Date.now },
 })
 
-
-export default mongoose.model("Event", Document);
+export default mongoose.models.Event || mongoose.model('Event', Event);
+// export default mongoose.model("Event", Event);

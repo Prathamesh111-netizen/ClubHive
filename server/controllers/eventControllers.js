@@ -36,12 +36,13 @@ const createEvent = async (req, res, next) => {
     description,
     committee,
     img,
-    startTime,
-    endTime,
     Budget,
     Prize,
     startTime,
     endTime,
+    startDate,
+    endDate,
+    rooms
   } = req.body;
   title = title || "";
   description = description || "";
@@ -53,6 +54,7 @@ const createEvent = async (req, res, next) => {
   endDate = endDate || "";
   Budget = Budget || "";
   Prize = Prize || "";
+  rooms = rooms || [];
 
   const event = await Event.create({
     title,
@@ -65,6 +67,7 @@ const createEvent = async (req, res, next) => {
     endTime,
     Budget,
     Prize,
+    rooms
   });
   res.status(201).json({
     success: true,
@@ -166,6 +169,15 @@ const ApprovalStatus = async (req, res, next) => {
 
   if (flag) {
     Event.findByIdAndUpdate(eventId, { approvalStatus: true }, { new: true });
+    // allocate rooms to the event
+    const rooms = [];
+    // for each room
+    // check one by one if the room is available for time slot
+    // if available then allocate the room
+    // else move to next room
+
+    
+
   }
 
   res.status(200).json({
