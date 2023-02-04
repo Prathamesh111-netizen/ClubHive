@@ -9,3 +9,11 @@ services:
       context: "server"
     ports:
       - "8000:8000"
+
+  socket:
+    image: "techie_pirates/socket"
+    container_name: "techie_pirates_socket"
+    build:
+      context: "socket-io"
+    ports:
+      - "3001:3001"
