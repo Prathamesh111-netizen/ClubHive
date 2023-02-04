@@ -7,7 +7,8 @@ import cors from "cors";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import Razorpayroutes from "./routes/razorpay.routes.js";
 import UserRoutes from "./routes/user.routes.js";
-import calendarRoutes from "./routes/calendar.routes.js";
+import CalendarRoutes from "./routes/calendar.routes.js";
+import RoomRoutes from "./routes/room.routes.js";
 import EventRoutes from "./routes/event.routes.js";
 // import productRoutes from "./routes/productRoutes.js";
 dotenv.config();
@@ -35,7 +36,6 @@ app.use(function (req, res, next) {
 import cloudinary from "./config/cloudinary.js";
 app.use("/upload", async (req, res) => {
   try {
- 
     const result = cloudinary.uploader.upload(req.files.file.path);
     return result.secure_url;
   } catch (error) {
@@ -45,8 +45,9 @@ app.use("/upload", async (req, res) => {
 // configure all the routes
 app.use("/api/razorpay", Razorpayroutes);
 app.use("/api/user", UserRoutes);
-app.use("/api/calendar", calendarRoutes);
+app.use("/api/calendar", CalendarRoutes);
 app.use("/api/event", EventRoutes);
+app.use("/api/rooms", RoomRoutes);
 
 app.get("/", (req, res) => {
   res.json({ status: "ok" });
