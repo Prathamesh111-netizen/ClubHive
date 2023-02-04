@@ -3,6 +3,7 @@ import Event from "../models/event.model.js";
 import Approval from "../models/Approval.model.js";
 import Room from "../models/room.model.js";
 import CalendarEvent from "../models/calendarEvent.model.js";
+import jwt from "jsonwebtoken"
 
 dotenv.config();
 
