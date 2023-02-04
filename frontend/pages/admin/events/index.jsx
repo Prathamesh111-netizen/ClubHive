@@ -25,7 +25,7 @@ const index = () => {
       console.log("user.committee");
       console.log(user.committee);
       setLoading(true);
-      await API.get(`/event/comm/`, {
+      API.get(`/event/comm/`, {
         params: {
           committee: user.committee,
         },
