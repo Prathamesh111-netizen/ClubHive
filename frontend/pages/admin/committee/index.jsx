@@ -9,12 +9,6 @@ import { uploadImage } from '@shared/utility';
 const index = () => {
   const [show, setShow] = React.useState(false);
   const [committees, setCommittees] = useState([
-    {
-      name: 'johndoe',
-      presidentEmail: "noman.khan@gmail.com",
-      type: "admin",
-      created: '',
-    }
   ])
   const [newCommittee, setNewCommittee] = useState({
     name: '',

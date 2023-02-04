@@ -40,7 +40,6 @@ const index = () => {
     },
   ]);
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
   const [show, setShow] = useState(false);
   const [approvedEvents, setApprovedEvents] = useState([{}]);
 

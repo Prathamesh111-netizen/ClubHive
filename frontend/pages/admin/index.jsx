@@ -124,6 +124,7 @@ const index = () => {
     API.post("/faculty/register", newUser)
       .then((res) => {
         setShow(false);
+        setUsers([...users, res.data.faculty]);
       })
       .catch((err) => {
         console.log(err);
