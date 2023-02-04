@@ -7,7 +7,6 @@ import Login from 'pages/login';
 
 const AdminLayout = ({ children }) => {
     const user = useSelector(state => state.auth.user);
-
     const dispatch = useDispatch();
 
     const onTryAutoSignup = useCallback(
@@ -22,7 +21,7 @@ const AdminLayout = ({ children }) => {
     return (
         <div className={styles.Admin_layout}>
             {
-                !user ?
+                user ?
                     <>
                         <AdminSidebar />
                         <div className={styles.outlet_wrapper}>
