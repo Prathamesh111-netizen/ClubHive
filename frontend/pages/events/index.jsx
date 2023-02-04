@@ -75,7 +75,6 @@ const index = () => {
       .then((response) => {
         console.log(response.data);
         const ops = response.data;
-        console.log("data", data);
         const options = {
           key: "rzp_test_6MRZgh5jRieE5u",
           currency: ops.currency,
@@ -88,9 +87,9 @@ const index = () => {
             alert(response.razorpay_payment_id);
             alert(response.razorpay_signature);
             alert("Donation :" + razorpayResponse.razorpay_order_id + " successful");
-
+            
             API.post(`/event_reg/${user._id}`, {
-                event_id: currentActiveEvent._id,
+                eventId: currentActiveEvent._id,
             })
 
           },
