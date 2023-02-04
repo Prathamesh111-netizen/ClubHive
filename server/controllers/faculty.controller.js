@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import Faculty from "../models/Faculty.model.js";
 import Approval from "../models/Approval.model.js";
 import Event from "../models/event.model.js";
+import User from "../models/user.model.js";
+
 dotenv.config();
 
 const registerFaculty = async (req, res, next) => {
@@ -15,6 +17,7 @@ const registerFaculty = async (req, res, next) => {
         profilePic,
         type,
       });
+      User.create({name, profilePic, email, type : "Faculty"})
       res.status(201).json({
         success: true,
         faculty: faculty,
