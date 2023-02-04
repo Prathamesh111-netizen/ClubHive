@@ -75,7 +75,10 @@ const getFaculty = async (req, res, next) => {
 const deleteFaculty = async (req, res, next) => {
   try {
     const { facultyId } = req.params;
-    Faculty.findByIdAndDelete(facultyId);
+    console.log("facultyId");
+    console.log(facultyId);
+
+    await Faculty.findByIdAndDelete(facultyId);
     res.status(200).json({
       success: true,
       message: "Faculty deleted successfully",

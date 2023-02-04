@@ -33,7 +33,6 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     if (email && password) {
       const user = await User.findOne({ email });
-      console.log(user);
       if (!user) {
         res.status(401).json({
           success: false,

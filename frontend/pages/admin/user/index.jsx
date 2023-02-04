@@ -17,7 +17,6 @@ export default function Users() {
     const getMembers = async () => {
         try {
             setLoading(true);
-            console.log(user);
             const response = await API.get("/comm_members", {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -69,7 +68,7 @@ export default function Users() {
     const addMember = async () => {
         try {
             setLoading(true);
-            const response = await API.post("/comm_members", member, { 
+            const response = await API.post("/comm_members", member, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 }
@@ -100,8 +99,8 @@ export default function Users() {
                     setShow(true);
                 }} className={styles.btn_primary + " py-2"}>Add Member</button>
             </div>
-            <Modal show={show} hideBackdrop={() => setShow(false)}>
-                <div className=" w-full">
+            <Modal show={show} hideBackdrop={() => setShow(false)} style={{ width: '40rem' }}>
+                <div className="text-2xl w-full flex flex-col gap-4">
                     <InputField
                         label="Email"
                         placeholder="noman@gmail.com"

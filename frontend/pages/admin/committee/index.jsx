@@ -9,14 +9,7 @@ import API from "@shared/API";
 
 const index = () => {
   const [show, setShow] = React.useState(false);
-  const [committees, setCommittees] = useState([
-    {
-      name: "johndoe",
-      presidentEmail: "noman.khan@gmail.com",
-      type: "admin",
-      created: "",
-    },
-  ]);
+  const [committees, setCommittees] = useState([]);
 
   useEffect(() => {
     API.get(`/committee`).then((res) => {
@@ -129,14 +122,14 @@ const index = () => {
   };
 
   const addCommittee = (e) => {
-    setCommittees([...committees, newCommittee]);
+    e.preventDefault();
+
     API.post("/committee", newCommittee)
       .then((res) => {
-        console.log(res);
         setShow(false);
+        setCommittees([...committees, res.data.committee]);
       })
       .catch((err) => {
-        console.log(res);
         setShow(false);
       });
   };
@@ -272,6 +265,7 @@ const index = () => {
               <td className={styles.list_item}>
                 <img
                   src={
+                    user?.profilePic ||
                     "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
                   }
                   alt=""
@@ -280,7 +274,13 @@ const index = () => {
               <td className={styles.list_item}>{user?.name}</td>
               <td className={styles.list_item}>{user?.presidentEmail}</td>
               <td className={styles.list_item}>{user?.type}</td>
-              <td onClick={deleteCommittee} className={styles.del}>
+              <td
+                onClick={() => {
+                  // console.log(user._id);
+                  deleteCommittee(user._id);
+                }}
+                className={styles.del}
+              >
                 <AiFillDelete />
                 Delete
               </td>

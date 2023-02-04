@@ -124,6 +124,7 @@ const index = () => {
     API.post("/faculty/register", newUser)
       .then((res) => {
         setShow(false);
+        setUsers([...users, res.data.faculty]);
       })
       .catch((err) => {
         console.log(err);
@@ -131,7 +132,16 @@ const index = () => {
       });
   };
 
-  const deleteUser = (id) => { };
+  const deleteUser = (id) => {
+    API.delete(`/faculty/${id}`)
+      .then((res) => {
+        setUsers(users.filter((user) => user._id !== id));
+        console.log(id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onChange = (e) => {
     setNewUser({
@@ -252,6 +262,7 @@ const index = () => {
               <td className={styles.list_item}>
                 <img
                   src={
+                    user.profilePic ||
                     "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
                   }
                   alt=""
@@ -260,7 +271,12 @@ const index = () => {
               <td className={styles.list_item}>{user?.name}</td>
               <td className={styles.list_item}>{user?.email}</td>
               <td className={styles.list_item}>{user?.type}</td>
-              <td className={styles.del}>
+              <td
+                className={styles.del}
+                onClick={() => {
+                  deleteUser(user._id);
+                }}
+              >
                 <AiFillDelete />
                 Delete
               </td>
