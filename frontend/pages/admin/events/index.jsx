@@ -13,7 +13,8 @@ const index = () => {
   const [events, setEvents] = useState([]);
   const [show, setShow] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
-  const user = JSON.parse(localStorage.getItem("user"));
+  let data = localStorage.getItem("user");
+  const user = JSON.parse(data);
   useEffect(() => {
     getEvents();
   }, []);
