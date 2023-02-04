@@ -12,6 +12,7 @@ import RoomRoutes from "./routes/room.routes.js";
 import EventRoutes from "./routes/event.routes.js";
 import CommitteeRoutes from "./routes/committee.routes.js";
 import FacultyRoutes from "./routes/faculty.routes.js";
+import CommitteeMembersRouters from "./routes/committee.members.routes.js";
 
 dotenv.config();
 const app = express();
@@ -52,6 +53,7 @@ app.use("/api/event", EventRoutes);
 app.use("/api/rooms", RoomRoutes);
 app.use("/api/committee", CommitteeRoutes);
 app.use("/api/faculty", FacultyRoutes);
+app.use("/api/comm_members", CommitteeMembersRouters);
 
 app.get("/", (req, res) => {
   res.json({ status: "ok" });
@@ -72,6 +74,5 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () =>
   console.log(`http://localhost:${process.env.PORT} in ${process.env.ENV} mode`)
 );
-
 
 // socket.io

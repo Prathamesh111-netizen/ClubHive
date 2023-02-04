@@ -4,6 +4,7 @@ var Event = mongoose.Schema({
   title: { type: String,  },
   description : {type : String},
   committee: { type: String, default: "None" },
+  category: { type: String, default: "None" },
   img: { type: String,  },
   startDate : {type : String},
   endDate : {type : String},
