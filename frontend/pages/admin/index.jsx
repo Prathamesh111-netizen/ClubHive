@@ -124,6 +124,7 @@ const index = () => {
     API.post("/faculty/register", newUser)
       .then((res) => {
         setShow(false);
+        setUsers([...users, res.data.faculty]);
       })
       .catch((err) => {
         console.log(err);
@@ -261,7 +262,7 @@ const index = () => {
               <td className={styles.list_item}>
                 <img
                   src={
-                    user?.profilePic ||
+                    user.profilePic ||
                     "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
                   }
                   alt=""
