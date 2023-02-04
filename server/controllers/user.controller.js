@@ -86,4 +86,17 @@ const getUser = (req, res, next) => {
   }
 };
 
-export { registerUser, login, getUser };
+const setFCMToken = async (req, res, next) => {
+  try {
+    const { name, deviceToken } = req.body.data;
+    await User.findOneAndUpdate({ name: name }, { deviceToken: deviceToken });
+    res.status(200).json({
+      success: true,
+      message: "Device token updated",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { registerUser, login, getUser, setFCMToken };
