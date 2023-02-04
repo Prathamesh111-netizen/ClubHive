@@ -19,6 +19,7 @@
     "firebase": "^9.17.1",
     "fs": "^0.0.1-security",
     "localforage": "^1.10.0",
+    "moment": "^2.29.4",
     "next": "^12.2.5",
     "next-redux-wrapper": "^8.1.0",
     "react": "^17.0.2",

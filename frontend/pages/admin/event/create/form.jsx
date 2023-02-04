@@ -20,7 +20,7 @@ export default function CreateEvent() {
     const [event, setEvent] = useState({
         title: "",
         description: "",
-        commitee: "",
+        committee: "",
         category: "",
         img: "",
         startTime: "",
@@ -135,15 +135,12 @@ export default function CreateEvent() {
     const createEvent = async () => {
         try {
             setLoading(true);
-            console.log(event);
             const res = await API.post("/event", event, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                 },
             });
-
-            toast.success("Event created successfully");
             router.replace("/admin/events");
         }
         catch (err) {
@@ -174,7 +171,7 @@ export default function CreateEvent() {
                         placeholder="Enactus"
                         key="event_committee"
                         id="committee"
-                        handleChange={() => (e) => { setEvent({ ...event, commitee: e.target.value }) }}
+                        handleChange={() => (e) => { setEvent({ ...event, committee: e.target.value }) }}
                         label="Committee Name"
                         value={event.commitee}
                     />

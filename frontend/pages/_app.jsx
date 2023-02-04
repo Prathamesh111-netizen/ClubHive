@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "@assets/styles/globals.scss";
 import "@assets/styles/utils.scss";
 import "@assets/styles/font.scss";
+import "@assets/styles/hero.scss";
 import { useRouter } from "next/router";
 import AdminLayout from "@Container/AdminLayout/AdminLayout";
 import { createContext, useEffect, useState } from "react";
