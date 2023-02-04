@@ -39,7 +39,6 @@ const index = () => {
             toast.error('Something went wrong1');
         }
     }
-    console.log(currentActiveEvent);
 
     return (
         <div className={styles.Events + " Container padding_top_nav"}>
@@ -62,7 +61,7 @@ const index = () => {
                                 setEvents(newEvents);
                             }}>
                                 <div className={styles.card_top}>
-                                    <img src={event.profilePic || "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"} alt="" />
+                                    <img src={event.img || "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"} alt="" />
                                     <div className={styles.card_right}>
                                         <h3>{event.title || "HackUs"}</h3>
                                         <p>Hosted by {event.committee || "CSI Community"}</p>
@@ -101,7 +100,7 @@ const index = () => {
                     currentActiveEvent ? (
                         <>
                             <div className={styles.header}>
-                                <img src={"https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"} alt="" />
+                                <img src={currentActiveEvent.img || "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"} alt="" />
                                 <div className={styles.right}>
                                     <h2>{currentActiveEvent.title || "CSI Hackathon"}</h2>
                                     <p>Hosted by {currentActiveEvent.committee || "CSI SPIT"}</p>

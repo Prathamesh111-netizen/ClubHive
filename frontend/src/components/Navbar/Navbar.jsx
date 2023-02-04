@@ -62,12 +62,12 @@ const Navbar = () => {
 					token ? (
 						<>
 							<Link href={'/calendar'} >
-								<div className={styles.menu_item + ` ${router.pathname === menu.link ? styles.active : ''}`} >
+								<div className={styles.menu_item + ` ${router.pathname === '/calendar' ? styles.active : ''}`} >
 									Calendar
 								</div>
 							</Link>
 							<Link href={'/profile'}>
-								<div className={styles.menu_item + ` ${router.pathname === menu.link ? styles.active : ''}`} >
+								<div className={styles.menu_item + ` ${router.pathname === '/profile' ? styles.active : ''}`} >
 									Profile
 								</div>
 							</Link>
