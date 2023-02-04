@@ -30,10 +30,6 @@ const registerUser = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-<<<<<<< HEAD
-  const user = await User.findOne({ email });
-  console.log(user);
-=======
   if (email && password) {
     const user = await User.findOne({ email });
     console.log(user);
@@ -70,7 +66,6 @@ const login = async (req, res, next) => {
 const getUser = (req, res, next) => {
   const { userId } = req.params;
   const user = User.findById(userId);
->>>>>>> 761298806c1e24e605cab7116225ef01f07937ca
   if (!user) {
     res.status(404).json({
       success: false,
@@ -79,11 +74,6 @@ const getUser = (req, res, next) => {
   }
   res.status(200).json({
     success: true,
-<<<<<<< HEAD
-    message: "Correct credentials",
-    token: token,
-=======
->>>>>>> 761298806c1e24e605cab7116225ef01f07937ca
     user: user,
   });
 };

@@ -9,6 +9,9 @@ import Razorpayroutes from "./routes/razorpay.routes.js";
 import UserRoutes from "./routes/user.routes.js";
 import calendarRoutes from "./routes/calendar.routes.js";
 import EventRoutes from "./routes/event.routes.js";
+import CommitteeRoutes from "./routes/committee.routes.js";
+import FacultyRoutes from "./routes/faculty.routes.js";
+
 // import productRoutes from "./routes/productRoutes.js";
 dotenv.config();
 const app = express();
@@ -42,11 +45,14 @@ app.use("/upload", async (req, res) => {
     console.log(error);
   }
 });
+
 // configure all the routes
 app.use("/api/razorpay", Razorpayroutes);
 app.use("/api/user", UserRoutes);
 app.use("/api/calendar", calendarRoutes);
 app.use("/api/event", EventRoutes);
+app.use("/api/committee", CommitteeRoutes);
+app.use("/api/faculty", FacultyRoutes);
 
 app.get("/", (req, res) => {
   res.json({ status: "ok" });

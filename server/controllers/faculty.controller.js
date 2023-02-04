@@ -4,7 +4,8 @@ dotenv.config();
 
 const registerFaculty = async (req, res, next) => {
   try {
-    const { name, email, profilePic, type } = req.body;
+    var { name, email, profilePic, type } = req.body;
+    console.log({ name, email, profilePic, type });
     if (name && email && profilePic && type) {
       const faculty = await Faculty.create({
         name,
@@ -50,4 +51,4 @@ const deleteFaculty = async (req, res, next) => {
   });
 };
 
-export { registerFaculty, getFaculty, deleteFaculty};
+export { registerFaculty, getFaculty, deleteFaculty };
