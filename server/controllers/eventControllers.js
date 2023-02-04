@@ -43,7 +43,7 @@ const getEvent = async (req, res, next) => {
     const { eventId } = req.params;
     const event = await Event.findById(eventId);
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -62,7 +62,7 @@ const getEventByCategory = async (req, res, next) => {
     const { category } = req.params;
     const events = Event.find({ category: category });
     if (!events) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -81,7 +81,7 @@ const getEventByCommittee = async (req, res, next) => {
     const { committee } = req.query;
     const event = await Event.find({ committee: committee });
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -169,7 +169,7 @@ const updateEvent = async (req, res, next) => {
 
     const event = await Event.findById(eventId);
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -219,7 +219,7 @@ const deleteEvent = async (req, res, next) => {
     const { eventId } = req.params;
     const ops = await Event.findByIdAndDelete(eventId);
     if (!ops) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -239,7 +239,7 @@ const ApprovalStatus = async (req, res, next) => {
     console.log(eventId);
     const event = await Event.findById(eventId);
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
