@@ -16,7 +16,7 @@ export const LoaderContext = createContext();
 function App({ Component, pageProps }) {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   return (
     <LoaderContext.Provider value={{ loading: loading, setLoading: setLoading }}>
