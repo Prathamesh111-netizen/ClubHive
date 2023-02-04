@@ -12,6 +12,7 @@ var Document = mongoose.Schema({
   budget : {type : Object},
   prize : {type : String},
   rooms : {type : Object},
+  roomsAllocated : {type : Object, default : {}},
   approvalStatus : {type : String, default : "Pending"},
   createdDate: { type: Date, default: Date.now },
   updatedDate: { type: Date, default: Date.now },

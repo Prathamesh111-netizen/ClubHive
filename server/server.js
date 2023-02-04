@@ -13,7 +13,6 @@ import EventRoutes from "./routes/event.routes.js";
 import CommitteeRoutes from "./routes/committee.routes.js";
 import FacultyRoutes from "./routes/faculty.routes.js";
 
-// import productRoutes from "./routes/productRoutes.js";
 dotenv.config();
 const app = express();
 // use morgan in development mode
@@ -74,4 +73,5 @@ app.listen(PORT, () =>
   console.log(`http://localhost:${process.env.PORT} in ${process.env.ENV} mode`)
 );
 
-// web crawlers
+
+// socket.io
