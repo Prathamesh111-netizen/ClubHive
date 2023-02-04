@@ -240,4 +240,5 @@ export {
   updateEvent,
   deleteEvent,
   ApprovalStatus,
+  getEventByCommittee
 };
