@@ -1,10 +1,16 @@
 import express from "express";
 
-import { registerFaculty, getFaculty, deleteFaculty, getFacultyById , AllApproveReq} from "../controllers/faculty.controller.js";
+import {
+  registerFaculty,
+  getFaculty,
+  deleteFaculty,
+  getFacultyById,
+  AllApproveReq,
+} from "../controllers/faculty.controller.js";
 
 const router = express.Router();
 
-router.route("/").post(registerFaculty).get(getFaculty);
+router.route("/register").post(registerFaculty).get(getFaculty);
 
 router.route("/:facultyId").delete(deleteFaculty).get(getFacultyById);
 

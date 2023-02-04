@@ -40,7 +40,7 @@ const getEvent = async (req, res, next) => {
 const getEventByCommittee = async (req, res, next) => {
   try {
     const { committee } = req.params;
-    const event = await Event.find({committee});
+    const event = await Event.find({committee : committee});
     if (!event) {
       res.status(404).json({
         success: false,
