@@ -1,0 +1,73 @@
+@import "@assets/styles/variables";
+
+.Committee {
+  padding: 2rem 2rem;
+  font-size: 1.2rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  .User_form {
+    form {
+      .form_item {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          font-size: 1.3rem;
+          font-weight: 500;
+        }
+
+        input {
+          padding: 1rem;
+          border: 1px solid $neutral-200;
+          border-radius: 0.6rem;
+          margin-top: 0.8rem;
+          font-size: 1.2rem;
+          width: 40rem;
+          color: $neutral-500;
+        }
+
+        select {
+          padding: 1rem;
+          border: 1px solid $neutral-200;
+          border-radius: 0.6rem;
+          margin-top: 0.8rem;
+          font-size: 1.3rem;
+          width: 40rem;
+          color: $neutral-500;
+        }
+      }
+
+      .btn_primary {
+        font-size: 1.4rem;
+        padding: 0.6rem 3rem;
+        border-radius: 2rem;
+        display: flex;
+        align-items: center;
+        margin-top: 2rem;
+        gap: 1rem;
+        background: $primary-black;
+        width: max-content;
+        height: max-content;
+        color: $neutral-000;
+      }
+    }
+  }
+  .btn_primary {
+    font-size: 1.4rem;
+    padding: 0.6rem 3rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+    background: $primary-black;
+    width: max-content;
+    height: max-content;
+    color: $neutral-000;
+  }
+}

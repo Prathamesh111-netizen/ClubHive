@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./variables";
+@import "./font";
+
+html {
+  scroll-behavior: smooth;
+  font-size: 62.5%;
+
+  /* Take rems according to this font 1rem = 10px */
+  @media screen and (max-width: 2300px) {
+    font-size: 70%;
+  }
+
+  @media screen and (max-width: 2300px) and (min-width: 620px) {
+    font-size: 62.5%;
+  }
+
+  @media screen and (max-width: 620px) {
+    font-size: 57%;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  color: $neutral-600;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background: #f6f8fa;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $neutral-300;
+    // border-radius: 50px;
+  }
+
+  &::-webkit-scrollbar-track {
+    // background: rgb(233, 231, 231);
+    // border-radius: 50px;
+  }
+}
+
+.App {
+  min-height: calc(100vh - $navbar-height);
+  display: flex;
+  flex-direction: column;
+}

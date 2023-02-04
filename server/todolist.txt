@@ -1,0 +1,22 @@
+event schema
+    title
+    description
+    img
+    rounds
+    startTime
+    endTime
+    Budget
+    PrizePool
+
+Calendar schema
+    
+Add Users to organisation
+President -> committee 
+Dean = Mentor
+User
+
+
+For Night
+Mail service
+Event -> code editor
+razorpay

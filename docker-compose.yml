@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+
+  backend:
+    image: "takey_pirates/backend"
+    container_name: "takey_pirates_backend"
+    build:
+      context: "server"
+    ports:
+      - "8000:8000"

@@ -1,0 +1,10 @@
+@import "@assets/styles/variables.scss";
+
+$herobg: rgb(241, 241, 241);
+
+.Hero_section {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  min-height: 70rem;
+}
