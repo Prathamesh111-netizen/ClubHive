@@ -17,5 +17,5 @@ var Document = mongoose.Schema({
   updatedDate: { type: Date, default: Date.now },
 })
 
-
-export default mongoose.model("Event", Document);
+export default mongoose.models.Event || mongoose.model('Event', Document);
+// export default mongoose.model("Event", Document);
