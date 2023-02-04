@@ -169,6 +169,15 @@ const ApprovalStatus = async (req, res, next) => {
 
   if (flag) {
     Event.findByIdAndUpdate(eventId, { approvalStatus: true }, { new: true });
+    // allocate rooms to the event
+    const rooms = [];
+    // for each room
+    // check one by one if the room is available for time slot
+    // if available then allocate the room
+    // else move to next room
+
+    
+
   }
 
   res.status(200).json({

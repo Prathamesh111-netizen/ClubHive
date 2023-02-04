@@ -57,11 +57,8 @@ const Login = () => {
 
       {/* <div className={styles.login_image">
 				<img src="/public/assets/images/loginImage.svg" alt="" />
-<<<<<<< HEAD
 			{/* <div className={styles.login_image">
 				<img src="@assets/images/loginImage.svg" alt="" />
-=======
->>>>>>> 761298806c1e24e605cab7116225ef01f07937ca
 			</div> */}
     </div>
   );

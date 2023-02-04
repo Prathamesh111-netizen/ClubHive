@@ -1,12 +1,14 @@
 import Modal from '@components/UI/Modal/Modal';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import styles from './admin.module.scss';
 import { AiOutlinePlus, AiFillDelete } from 'react-icons/ai';
 import BreadCrumb from '@components/Navbar/BreadCrumb';
+import { uploadImage } from '@shared/utility';
+import { toast } from '@mobiscroll/react';
 
 const index = () => {
-    const [show, setShow] = React.useState(true);
+    const [show, setShow] = React.useState(false);
     const [users, setUsers] = useState([
         {
 
@@ -15,14 +17,123 @@ const index = () => {
             type: "admin",
         }
     ]);
+    const [newUser, setNewUser] = useState({
+        username: '',
+        email: '',
+        type: '',
+        profilePic: ''
+    });
+    const fileRef = useRef();
+    const dragRef = useRef(null);
+    const [prevImg, setPrevImg] = useState();
+    const [files, setFiles] = useState([]);
 
-    const addUser = () => {
+    useEffect(() => {
+        updateNewUserData();
+    }, [prevImg]);
 
+    const updateNewUserData = async () => {
+        try {
+            if (files.length > 0) {
+                const data = new FormData();
+                data.append("file", files[0]);
+                data.append("upload_preset", "itlab_image_store_preset");
+                data.append("cloud_name", "dl8hmamey");
+                fetch("  https://api.cloudinary.com/v1_1/dl8hmamey/image/upload", {
+                    method: "post",
+                    body: data,
+                })
+                    .then((resp) => resp.json())
+                    .then((data) => {
+                        setNewUser({ ...newUser, profilePic: data.url });
+                    })
+                    .catch((err) => console.log(err));
 
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('Something went wrong');
+        }
+
+    }
+
+    const handleFileBtnClick = () => {
+        fileRef.current.click();
+    };
+
+    const process = (file) => {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function (event) {
+            const imgElement = document.createElement("img");
+            imgElement.src = event.target.result;
+
+            imgElement.onload = function (e) {
+                const canvas = document.createElement("canvas");
+                const MAX_WIDTH = 300;
+
+                const scaleSize = MAX_WIDTH / e.target.width;
+                canvas.width = MAX_WIDTH;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx = canvas.getContext("2d");
+
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height);
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg");
+                setPrevImg(srcEncoded);
+            };
+        };
+    };
+
+    const handleFile = async (e) => {
+        e.preventDefault();
+        for (let i = 0; i < e.target.files.length; i++) {
+            setFiles((prevFiles) => {
+                return [...prevFiles, e.target.files[i]];
+            });
+        }
+        await process(e.target.files[0]);
+    };
+
+    const handleDrag = (e, type) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (type === "dragOver") dragRef.current.classList.add("active");
+        else if (type === "dragLeave") dragRef.current.classList.remove("active");
+    };
+
+    const handleDrop = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dragRef.current.classList.remove("active");
+        const uploadedFiles = e.dataTransfer.files;
+        dragRef.current.classList.add("uploading");
+        for (let i = 0; i < uploadedFiles.length; i++) {
+            setFiles((prevFiles) => {
+                return [...prevFiles, uploadedFiles[i]];
+            });
+        }
+        await process(uploadedFiles[0]);
+        dragRef.current.classList.remove("uploading");
+    };
+
+    const addUser = (e) => {
+        e.preventDefault();
+        console.log(newUser);
     }
 
     const deleteUser = (id) => {
 
+    }
+
+    const onChange = (e) => {
+        setNewUser({
+            ...newUser,
+            [e.target.name]: e.target.value
+        });
     }
 
     return (
@@ -33,22 +144,53 @@ const index = () => {
                     <form className="flex flex-col gap-5 mt-5">
                         <div className={styles.form_item}>
                             <label htmlFor="username" placeholder='Username'>Username</label>
-                            <input type="text" name="username" id="username" />
+                            <input type="text" name="username" value={newUser.username} onChange={onChange} id="username" />
                         </div>
                         <div className={styles.form_item}>
                             <label htmlFor="email" placeholder='User Email'>Email</label>
-                            <input type="email" name="email" id="email" />
+                            <input type="email" value={newUser.email} onChange={onChange} name="email" id="email" />
                         </div>
                         <div className={styles.form_item}>
                             <label htmlFor="type">Type</label>
-                            <select name="type" id="type">
+                            <select name="type" id="type" onChange={onChange}>
                                 <option value="admin">Admin</option>
                                 <option value="faculty">Faculty</option>
                                 <option value="student">Student</option>
                             </select>
                         </div>
-
-                        <button onClick={addUser} className={styles.btn_primary}>Add User</button>
+                        <div className={styles.file_upload}>
+                            {files.length === 0 ? (
+                                <div className={styles.upload_img}>
+                                    <div
+                                        ref={dragRef}
+                                        className={styles.drop_area}
+                                        onDragOver={(e) => handleDrag(e, "dragOver")}
+                                        onDragLeave={(e) => handleDrag(e, "dragLeave")}
+                                        onDrop={handleDrop}
+                                    >
+                                        <h2>Drag & Drop your profile photo here</h2>
+                                        <span>OR</span>
+                                        <div className={styles.browse_btn} onClick={handleFileBtnClick}>
+                                            Browse Files
+                                        </div>
+                                        <input
+                                            ref={fileRef}
+                                            type="file"
+                                            onChange={handleFile}
+                                            multiple
+                                            hidden
+                                            id="myFile"
+                                            name="filename"
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className={styles.image_preview}>
+                                    <img id="prev-img" src={prevImg} alt="" />
+                                </div>
+                            )}
+                        </div>
+                        <button onClick={(e) => addUser(e)} className={styles.btn_primary}>Add User</button>
                     </form>
                 </div>
             </Modal>
