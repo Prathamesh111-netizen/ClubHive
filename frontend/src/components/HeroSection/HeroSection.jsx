@@ -31,7 +31,7 @@ const HeroSection = () => {
 						BRING
 					</h1>
 					<div className="content">
-						Our mission is to make the web a more beautiful place.
+						Our mission is to make the college experience more engaging and fun.
 					</div>
 				</div>
 				<div className="middle_content">
@@ -55,7 +55,7 @@ const HeroSection = () => {
 						IDEAS
 					</h1>
 					<div className="content">
-						We will provide the best UI components for your next project.
+						We will provide you with a platform to showcase your ideas.
 					</div>
 				</div>
 				<Link href={'/events'}>
@@ -77,7 +77,7 @@ const HeroSection = () => {
 					</div>
 					<div className='bottom_asset1'>
 						<div className="circle"></div>
-						<div className='desc'>Bring your ideas to life with <span>AnimUI</span></div>
+						<div className='desc'>Bring your ideas to life with <span>CLUBHIVE</span></div>
 					</div>
 				</div>
 
