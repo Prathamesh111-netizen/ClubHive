@@ -126,7 +126,12 @@ const index = () => {
                         </div>
                     </div>
                 </div>
-                
+                <div className={styles.description}>
+                    <h1>About The Event</h1>
+                    <div dangerouslySetInnerHTML={{ __html: currentActiveEvent?.desc || '' }}>
+
+                    </div>
+                </div>
             </div>
         </div>
     )
