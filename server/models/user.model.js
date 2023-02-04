@@ -8,6 +8,7 @@ var userModeSchema = mongoose.Schema({
   password: {type: String, },
   role: { type: String, default: "User" },
   status: { type: String,  default: "Active" },
+  deviceToken : { type: String,  default: ""},
   createdDate: { type: Date, default: Date.now },
   updatedDate: { type: Date, default: Date.now },
 })
