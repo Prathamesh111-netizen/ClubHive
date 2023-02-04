@@ -6,9 +6,6 @@ import {
 
 const router = express.Router();
 
-router.route("/:userId").get(allRegisteredEvents);
-
-router.route("/").post(registerForEvent);
-
+router.route("/:userId").get(allRegisteredEvents).post(registerForEvent);
 
 export default router;

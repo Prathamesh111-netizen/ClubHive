@@ -14,6 +14,7 @@ import CommitteeRoutes from "./routes/committee.routes.js";
 import FacultyRoutes from "./routes/faculty.routes.js";
 import CommitteeMembersRouters from "./routes/committee.members.routes.js";
 import MeetingsRouters from "./routes/meetings.routes.js";
+import EventRegistraionRouters from "./routes/event.reg.routes.js";
 
 dotenv.config();
 const app = express();
@@ -55,8 +56,8 @@ app.use("/api/rooms", RoomRoutes);
 app.use("/api/committee", CommitteeRoutes);
 app.use("/api/faculty", FacultyRoutes);
 app.use("/api/comm_members", CommitteeMembersRouters);
-app.use('/api/meetings', MeetingsRouters);
-
+app.use("/api/meetings", MeetingsRouters);
+app.use("/api/event_reg", EventRegistraionRouters);
 
 app.get("/", (req, res) => {
   res.json({ status: "ok" });

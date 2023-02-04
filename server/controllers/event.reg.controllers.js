@@ -5,7 +5,8 @@ dotenv.config();
 
 const registerForEvent = async (req, res, next) => {
   try {
-    const { eventId, userId } = req.body;
+    const { userId  } = req.params;
+    const { eventId } = req.body;
     if (eventId && userId) {
       const registration = await CalendarEvent.create({ eventId, userId });
       res.status(201).json({
