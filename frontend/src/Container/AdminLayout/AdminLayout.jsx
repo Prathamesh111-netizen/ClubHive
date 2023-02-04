@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import styles from './AdminLayout.module.scss';
 import AdminSidebar from '@components/AdminSidebar/AdminSidebar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '@actions/index';
 import Login from 'pages/login';
 
 const AdminLayout = ({ children }) => {
     const user = useSelector(state => state.auth.user);
+
+    const dispatch = useDispatch();
+
+    const onTryAutoSignup = useCallback(
+        () => dispatch(actions.authCheckState()),
+        [dispatch]
+    );
+
+    useEffect(() => {
+        onTryAutoSignup();
+    }, [onTryAutoSignup]);
 
     return (
         <div className={styles.Admin_layout}>
