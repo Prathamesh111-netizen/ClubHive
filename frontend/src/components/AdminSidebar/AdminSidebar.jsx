@@ -71,7 +71,11 @@ const AdminSidebar = () => {
           <img src={avatar.src} alt="" />
           <div className={styles.name}>Noman</div>
         </div>
-        <div className={styles.logout}>
+        <div className={styles.logout} onClick={() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push('/login')
+        }}>
           <BiLogOut />
         </div>
       </div>

@@ -21,6 +21,7 @@ export default function CreateEvent() {
         title: "",
         description: "",
         commitee: "",
+        category: "",
         img: "",
         startTime: "",
         endTime: "",
@@ -134,15 +135,16 @@ export default function CreateEvent() {
     const createEvent = async () => {
         try {
             setLoading(true);
-            console.log(loading)
+            console.log(event);
             const res = await API.post("/event", event, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                 },
             });
+
             toast.success("Event created successfully");
-            router.replace("/events");
+            router.replace("/admin/events");
         }
         catch (err) {
 
@@ -176,6 +178,18 @@ export default function CreateEvent() {
                         label="Committee Name"
                         value={event.commitee}
                     />
+                    <div className="mb-4 w-full">
+                        <label className="block text-gray-700 text-md font-bold mb-2">
+                            Category
+                        </label>
+                        <select className={"border rounded w-full py-2 px-3 text-gray-700 "} name="type" id="category" onChange={(e) => { setEvent({ ...event, category: e.target.value }) }}>
+                            <option value="Member">Technical</option>
+                            <option value="President">Cultural</option>
+                            <option value="Dean Academics">Esports</option>
+                            <option value="Mentor">Sports</option>
+                            <option value="Mentor">Business</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div className={styles.file_upload}>
