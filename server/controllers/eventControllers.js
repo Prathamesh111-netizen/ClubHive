@@ -229,7 +229,6 @@ const ApprovalStatus = async (req, res, next) => {
       const users = await Approval.find({ eventId: eventId });
       var eventData = [];
       var flag = true;
-      console.log(users);
       for (let user of users) {
         eventData.push({
           userId: user.userId,
