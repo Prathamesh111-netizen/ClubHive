@@ -2,6 +2,7 @@ import BreadCrumb from "@components/Navbar/BreadCrumb";
 import InputField from "@components/UI/InputField";
 import dynamic from "next/dynamic";
 const RichTextEditor = dynamic(() => import('@components/UI/RichTextEditor'), { ssr: false });
+import { AiOutlineSearch } from "react-icons/ai";
 
 import { useState } from "react";
 
@@ -14,17 +15,16 @@ export default function CreateEvent() {
         img: "",
         startTime: "",
         endTime: "",
-        budget: [],
-        prize: [],
+        budget: "",
         startDate: "",
+        prize: "",
         endDate: "",
         rooms: {
             labs: 0,
             classRoom: 0,
             hall: 0,
-        }
+        },
     });
-
 
     return (
         <div className="w-full">
@@ -129,7 +129,6 @@ export default function CreateEvent() {
                     handleChange={() => (e) => { setEvent({ ...event, rooms: { ...event.rooms, hall: e.target.value } }) }}
                 />
             </div>
-            
         </div>
     )
 }
