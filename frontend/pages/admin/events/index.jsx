@@ -10,28 +10,28 @@ import { IoPricetagOutline } from "react-icons/io5";
 import Modal from "@components/UI/Modal/Modal";
 
 const index = () => {
-  const [events, setEvents] = useState([]);
-  const [show, setShow] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState(null);
-  const user = JSON.parse(localStorage.getItem("user"));
-  useEffect(() => {
-    getEvents();
-  }, []);
+    const [events, setEvents] = useState([]);
+    const [show, setShow] = useState(false);
+    const [currentEvent, setCurrentEvent] = useState(null);
+    const user = JSON.parse(localStorage.getItem("user"));
+    useEffect(() => {
+        getEvents();
+    }, []);
 
-  const { loading, setLoading } = useContext(LoaderContext);
+    const { loading, setLoading } = useContext(LoaderContext);
 
-  const getEvents = async () => {
-    try {
-      setLoading(true);
-      const res = await API.get(`/event/comm/${user.committee}`, {});
-      setEvents(res.data.event);
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const getEvents = async () => {
+        try {
+            setLoading(true);
+            const res = await API.get(`/event/comm/${user.committee}`, {});
+            setEvents(res.data.event);
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className={styles.Event}>
@@ -88,11 +88,8 @@ const index = () => {
                     );
                 })}
             </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default index;
