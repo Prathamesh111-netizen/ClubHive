@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import Approval from "../models/Approval.model.js";
+import Event from "../models/event.model.js";
 dotenv.config();
 
 const RequestApproveEvent = async (req, res, next) => {
@@ -34,9 +35,16 @@ const ApproveEvent = async (req, res, next) => {
       { approvalStatus: "Approved" },
       { new: true }
     );
+
+    const event = Event.findByIdAndUpdate(
+      eventId,
+      { approvalStatus: "Approved" },
+      { new: true }
+    );
+
     res.status(201).json({
       success: true,
-      approval: UpdatedApproval,
+      approval: event,
     });
   } catch (error) {
     next(error);
