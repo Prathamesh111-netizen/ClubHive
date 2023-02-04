@@ -87,3 +87,9 @@ input {
   top: 0;
   transition: 0.2s all ease;
 }
+
+.hide_scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
