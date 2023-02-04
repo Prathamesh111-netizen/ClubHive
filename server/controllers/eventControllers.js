@@ -3,16 +3,32 @@ import Event from "../models/event.model.js";
 import Approval from "../models/Approval.model.js";
 import Room from "../models/room.model.js";
 import CalendarEvent from "../models/calendarEvent.model.js";
-// import 
+import jwt from "jsonwebtoken";
+import EventRegistration from "../models/eventRegistration.model.js";
 
 dotenv.config();
 
 const getAllEvent = async (req, res, next) => {
   try {
-    const events = await Event.find({});
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.decode(token);
+
+    var events = await Event.find({});
+    
+    const finalevents = [];
+    events.forEach(async (event) => {
+      var registeredEvents = await EventRegistration.find({ userId: decoded.id, eventId: event._id });
+      if (registeredEvents.length == 0) {
+        finalevents.push({event: event, registered: false});
+      }
+      else{
+        finalevents.push({event: event, registered: true});
+      }
+    });
+
     res.status(200).json({
       success: true,
-      events: events,
+      events: finalevents,
     });
   } catch (error) {
     next(error);
@@ -57,11 +73,10 @@ const getEventByCategory = async (req, res, next) => {
   }
 };
 
-
 const getEventByCommittee = async (req, res, next) => {
   try {
     const { committee } = req.params;
-    const event = await Event.find({committee : committee});
+    const event = await Event.find({ committee: committee });
     if (!event) {
       res.status(404).json({
         success: false,
@@ -146,7 +161,7 @@ const updateEvent = async (req, res, next) => {
       budget,
       prize,
       rooms,
-      category
+      category,
     } = req.body;
 
     const event = await Event.findById(eventId);
@@ -181,7 +196,7 @@ const updateEvent = async (req, res, next) => {
           budget,
           prize,
           rooms,
-          category
+          category,
         },
         { new: true }
       );
@@ -254,12 +269,11 @@ const ApprovalStatus = async (req, res, next) => {
       // const newRoom = [];
       // const calendarEvents = CalendarEvent.find({});
       // for(let event in calendarEvents) {
-        
+
       // }
       // for(let room in rooms) {
       //   roomByType[room.type].push(room);
       // }
-      
     }
 
     res.status(200).json({
@@ -280,5 +294,5 @@ export {
   deleteEvent,
   ApprovalStatus,
   getEventByCommittee,
-  getEventByCategory
+  getEventByCategory,
 };
