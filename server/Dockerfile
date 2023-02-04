@@ -5,4 +5,5 @@ WORKDIR /app
 COPY . .
 RUN npm i
 EXPOSE 8000
-ENTRYPOINT ["npm", "start"]
+RUN npm i -g pm2
+ENTRYPOINT ["pm2", "start", "server.js", "--no-daemon"]
