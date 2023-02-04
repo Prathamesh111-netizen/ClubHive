@@ -7,7 +7,15 @@ const getEvents = async (req, res, next) => {
   let events = [];
   try {
     if (!committeeName || committeeName === "global") {
-      events = await CalendarEvent.find();
+      let roomNames = await Room.find({}, { roomNo: 1, _id: 0 });
+      let calendarEvents = await CalendarEvent.find({});
+      let globalEvents = [];
+      globalEvents = calendarEvents.filter((event) => {
+        if (!roomNames.includes(event.committeeName)) {
+          return event;
+        }
+      });
+      events = globalEvents;
     } else {
       events = await CalendarEvent.find({ committeeName: committeeName });
       console.log("events in get");

@@ -34,6 +34,25 @@ const getEvent = async (req, res, next) => {
   }
 };
 
+const getEventByCommittee = async (req, res, next) => {
+  try {
+    const { committee } = req.params;
+    const event = await Event.find({committee});
+    if (!event) {
+      res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      event: event,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createEvent = async (req, res, next) => {
   try {
     var {
@@ -221,4 +240,5 @@ export {
   updateEvent,
   deleteEvent,
   ApprovalStatus,
+  getEventByCommittee
 };

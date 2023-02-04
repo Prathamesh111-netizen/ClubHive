@@ -15,6 +15,7 @@ import Loader from "@components/Loader/Loader";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { initializeApp } from "firebase/app";
 import { async } from "@firebase/util";
+import API from "@shared/API";
 // import { Toast } from "react-toastify/dist/components";
 // import { Toast } from "react-toastify/dist/components";
 const firebaseConfig = {
@@ -34,6 +35,24 @@ export const getToken2 = (setTokenFound, messaging) => {
   })
     .then((currentToken) => {
       if (currentToken) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = localStorage.getItem("token");
+        localStorage.setItem("deviceToken", currentToken);
+        console.log("user name is", user);
+        if (user) {
+          API.put("/user/set-device-token", {
+            data: {
+              deviceToken: currentToken,
+              name: user.name,
+            },
+          })
+            .then((res) => {
+              console.log("res is for put fcm is ", res);
+            })
+            .catch((err) => {
+              console.log("err is", err);
+            });
+        }
         console.log("current token for client: ", currentToken);
         setTokenFound(true);
         // Track the token -> client mapping, by sending to backend server
@@ -80,6 +99,16 @@ function App({ Component, pageProps }) {
       })
       .catch((err) => console.log("failed: ", err));
   }, []);
+
+  // const dispatch = useDispatch();
+  // const onTryAutoSignup = useCallback(
+  //   () => dispatch(actions.authCheckState()),
+  //   [dispatch]
+  // );
+
+  // useEffect(() => {
+  //   onTryAutoSignup();
+  // }, [onTryAutoSignup]);
 
   return (
     <LoaderContext.Provider
