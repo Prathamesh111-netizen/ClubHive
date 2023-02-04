@@ -20,7 +20,8 @@ const createMember = async (req, res) => {
 
 const getAllMembers = async (req, res) => {
   try {
-    const members = await CommitteeMember.find({});
+    const { committeeName } = req.params;
+    const members = await CommitteeMember.find({committeeName : committeeName});
     res.status(200).json({
       success: true,
       members: members,

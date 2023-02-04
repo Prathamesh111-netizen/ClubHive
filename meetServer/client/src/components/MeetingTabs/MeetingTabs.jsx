@@ -77,7 +77,7 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(
 );
 
 export default function BasicTabs(props) {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(3);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

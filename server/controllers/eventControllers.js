@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
 import Event from "../models/event.model.js";
 import Approval from "../models/Approval.model.js";
+import Room from "../models/room.model.js";
+import CalendarEvent from "../models/calendarEvent.model.js";
+
 dotenv.config();
 
 const getAllEvent = async (req, res, next) => {
@@ -216,11 +219,25 @@ const ApprovalStatus = async (req, res, next) => {
     if (flag) {
       Event.findByIdAndUpdate(eventId, { approvalStatus: true }, { new: true });
       // allocate rooms to the event
-      const rooms = [];
       // for each room
       // check one by one if the room is available for time slot
       // if available then allocate the room
       // else move to next room
+      // const rooms = await Room.find({});
+      // const roomByType = {
+      //   hall: [],
+      //   lab: [],
+      //   classRoom: [],
+      // }
+      // const newRoom = [];
+      // const calendarEvents = CalendarEvent.find({});
+      // for(let event in calendarEvents) {
+        
+      // }
+      // for(let room in rooms) {
+      //   roomByType[room.type].push(room);
+      // }
+      
     }
 
     res.status(200).json({
