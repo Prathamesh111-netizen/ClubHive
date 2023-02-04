@@ -3,6 +3,7 @@ import Event from "../models/event.model.js";
 import Approval from "../models/Approval.model.js";
 import Room from "../models/room.model.js";
 import CalendarEvent from "../models/calendarEvent.model.js";
+// import
 import jwt from "jsonwebtoken";
 import EventRegistration from "../models/eventRegistration.model.js";
 
@@ -13,16 +14,23 @@ const getAllEvent = async (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.decode(token);
 
+<<<<<<< HEAD
     var events = await Event.find({approvalStatus : "Approved"});
     
+=======
+    var events = await Event.find({});
+
+>>>>>>> 05195ecb83d8d065a1a032123e060aac0d714a37
     const finalevents = [];
     events.forEach(async (event) => {
-      var registeredEvents = await EventRegistration.find({ userId: decoded.id, eventId: event._id });
+      var registeredEvents = await EventRegistration.find({
+        userId: decoded.id,
+        eventId: event._id,
+      });
       if (registeredEvents.length == 0) {
-        finalevents.push({event: event, registered: false});
-      }
-      else{
-        finalevents.push({event: event, registered: true});
+        finalevents.push({ event: event, registered: false });
+      } else {
+        finalevents.push({ event: event, registered: true });
       }
     });
 
@@ -40,7 +48,7 @@ const getEvent = async (req, res, next) => {
     const { eventId } = req.params;
     const event = await Event.findById(eventId);
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -59,7 +67,7 @@ const getEventByCategory = async (req, res, next) => {
     const { category } = req.params;
     const events = Event.find({ category: category });
     if (!events) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -75,10 +83,10 @@ const getEventByCategory = async (req, res, next) => {
 
 const getEventByCommittee = async (req, res, next) => {
   try {
-    const { committee } = req.params;
+    const { committee } = req.query;
     const event = await Event.find({ committee: committee });
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -166,7 +174,7 @@ const updateEvent = async (req, res, next) => {
 
     const event = await Event.findById(eventId);
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -216,7 +224,7 @@ const deleteEvent = async (req, res, next) => {
     const { eventId } = req.params;
     const ops = await Event.findByIdAndDelete(eventId);
     if (!ops) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
@@ -236,7 +244,7 @@ const ApprovalStatus = async (req, res, next) => {
     console.log(eventId);
     const event = await Event.findById(eventId);
     if (!event) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Event not found",
       });
