@@ -33,9 +33,11 @@ const registerFaculty = async (req, res, next) => {
 const getFacultyById = async (req, res, next) => {
   try {
     const { facultyId } = req.params;
+    console.log("facultyId");
+    console.log(facultyId);
     const faculty = await Faculty.findById(facultyId);
     if (!faculty) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Faculty not found",
       });
@@ -53,12 +55,12 @@ const getFaculty = async (req, res, next) => {
   try {
     const faculty = await Faculty.find({});
     if (!faculty) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "Faculty not found",
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       faculty: faculty,
     });

@@ -29,6 +29,12 @@ const index = () => {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
+    API.get(`/faculty`).then((res) => {
+      setUsers(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
     updateNewUserData();
   }, [prevImg]);
 

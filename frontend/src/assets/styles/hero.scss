@@ -9,7 +9,7 @@ $herobg: rgb(241, 241, 241);
   min-height: 70rem;
   width: 100%;
   background: transparent;
-  
+
   @media screen and (max-width: $break-point-tab-lg) {
     flex-direction: column;
     padding-top: calc($navbar-height + 4rem);
@@ -140,11 +140,16 @@ $herobg: rgb(241, 241, 241);
 
     .btn {
       margin-top: 3rem;
-
-      @media screen and (max-width: $break-point-tab-lg) {
-        margin-left: auto;
-        margin-right: auto;
-      }
+      width: max-content;
+      display: flex;
+      background: $neutral-600;
+      font-size: 1.6rem;
+      padding: 0.6rem 3rem;
+      color: $neutral-000;
+      border-radius: 0.8rem;
+      gap: 1rem;
+      align-items: center;
+      cursor: pointer;
     }
   }
 
