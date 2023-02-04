@@ -5,6 +5,7 @@ import Calendar from "@components/Calendar/Calendar";
 import Loader from "@components/Loader/Loader";
 import Modal from "@components/UI/Modal/Modal";
 import styles from "./rooms.module.scss";
+import API from "@shared/API";
 
 const index = () => {
   const [rooms, setRooms] = useState([]);
@@ -21,8 +22,7 @@ const index = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/rooms/get-rooms`)
+    API.get(`/rooms/get-rooms`)
       .then((response) => {
         setRooms(response.data.rooms.map((room) => room.roomNo));
         setIsLoading(false);
@@ -32,9 +32,9 @@ const index = () => {
       });
   }, []);
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
+  if (isLoading) {
+    return <Loader />;
+  }
 
   const addRoom = async () => {
     let newRoom = {
@@ -45,8 +45,7 @@ const index = () => {
     let newRooms = rooms;
     newRooms.push(newRoom.roomNo);
     setRooms(newRooms);
-    await axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/rooms/create-room`, newRoom)
+    API.post(`/rooms/create-room`, newRoom)
       .then((response) => {
         // log(response.data);
         setShowModal(false);
