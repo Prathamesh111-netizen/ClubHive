@@ -7,7 +7,7 @@ import BreadCrumb from '@components/Navbar/BreadCrumb';
 
 
 const index = () => {
-  const [show, setShow] = React.useState(true);
+  const [show, setShow] = React.useState(false);
   const users = [
     {
       username: 'johndoe',

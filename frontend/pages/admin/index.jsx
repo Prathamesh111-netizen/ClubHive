@@ -6,7 +6,7 @@ import { AiOutlinePlus, AiFillDelete } from 'react-icons/ai';
 import BreadCrumb from '@components/Navbar/BreadCrumb';
 
 const index = () => {
-    const [show, setShow] = React.useState(true);
+    const [show, setShow] = React.useState(false);
     const [users, setUsers] = useState([
         {
 
