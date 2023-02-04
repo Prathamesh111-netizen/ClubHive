@@ -6,7 +6,7 @@ export const updateObject = (oldObject, updatedProperties) => {
 	return updated;
 };
 
-export const uploadImage = async (imageFile) => {
+export const uploadImage = (imageFile) => {
 	const data = new FormData();
 	data.append("file", imageFile);
 	data.append("upload_preset", "itlab_image_store_preset");
