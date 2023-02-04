@@ -8,34 +8,43 @@ import '@assets/styles/utils.scss';
 import '@assets/styles/font.scss';
 import { useRouter } from 'next/router';
 import AdminLayout from '@Container/AdminLayout/AdminLayout';
+import { createContext, useState } from 'react';
+import Loader from '@components/Loader/Loader';
+
+export const LoaderContext = createContext();
 
 function App({ Component, pageProps }) {
   const router = useRouter();
 
-  return (
-    <Provider store={store}>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      {
-        router.pathname.includes("admin") ?
-          <AdminLayout>
-            <Component {...pageProps} />
-          </AdminLayout>
-          : <Layout>
-            <Component {...pageProps} />
-          </Layout>
-      }
+  const [loading, setLoading] = useState(false);
 
-    </Provider>
+  return (
+    <LoaderContext.Provider value={{ loading: loading, setLoading: setLoading }}>
+      <Provider store={store}>
+        {loading && <Loader />}
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        {
+          router.pathname.includes("admin") ?
+            <AdminLayout>
+              <Component {...pageProps} />
+            </AdminLayout>
+            : <Layout>
+              <Component {...pageProps} />
+            </Layout>
+        }
+
+      </Provider>
+    </LoaderContext.Provider>
   )
 }
 

@@ -36,12 +36,13 @@ const createEvent = async (req, res, next) => {
     description,
     committee,
     img,
-    startTime,
-    endTime,
     Budget,
     Prize,
     startTime,
     endTime,
+    startDate,
+    endDate,
+    rooms
   } = req.body;
   title = title || "";
   description = description || "";
@@ -53,6 +54,7 @@ const createEvent = async (req, res, next) => {
   endDate = endDate || "";
   Budget = Budget || "";
   Prize = Prize || "";
+  rooms = rooms || [];
 
   const event = await Event.create({
     title,
@@ -65,6 +67,7 @@ const createEvent = async (req, res, next) => {
     endTime,
     Budget,
     Prize,
+    rooms
   });
   res.status(201).json({
     success: true,
