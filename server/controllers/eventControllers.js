@@ -48,7 +48,8 @@ const createEvent = async (req, res, next) => {
       rooms,
       budget,
       prize,
-      rooms
+      rooms,
+      category,
     } = req.body;
     title = title || "";
     description = description || "";
@@ -61,6 +62,7 @@ const createEvent = async (req, res, next) => {
     budget = budget || "";
     prize = prize || "";
     rooms = rooms || [];
+    category = category || "";
 
     const event = await Event.create({
       title,
@@ -74,6 +76,7 @@ const createEvent = async (req, res, next) => {
       budget,
       prize,
       rooms,
+      category,
     });
     res.status(201).json({
       success: true,
@@ -97,7 +100,8 @@ const updateEvent = async (req, res, next) => {
       endTime,
       budget,
       prize,
-      rooms
+      rooms,
+      category
     } = req.body;
 
     const event = await Event.findById(eventId);
@@ -114,9 +118,10 @@ const updateEvent = async (req, res, next) => {
       rounds = rounds || event.rounds;
       startTine = startTine || event.startTine;
       endTime = endTime || event.endTime;
-      budget = Budget || event.Budget;
-      prize = Prize || event.Prize;
+      budget = budget || event.budget;
+      prize = prize || event.prize;
       rooms = rooms || event.rooms;
+      category = category || event.category;
 
       const updatedEvent = await Event.findByIdAndUpdate(
         eventId,
@@ -131,6 +136,7 @@ const updateEvent = async (req, res, next) => {
           budget,
           prize,
           rooms,
+          category
         },
         { new: true }
       );
