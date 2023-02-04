@@ -3,10 +3,14 @@ import dynamic from "next/dynamic";
 const RichTextEditor = dynamic(() => import('@components/UI/RichTextEditor'), { ssr: false });
 import { LoaderContext } from "pages/_app";
 
-import { useContext, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import API from "@shared/API";
+import styles from './create.module.scss';
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { useSelector } from 'react-redux';
+import BreadCrumb from '@components/Navbar/BreadCrumb';
+import { uploadImage } from '@shared/utility';
 
 export default function CreateEvent() {
 
@@ -30,6 +34,103 @@ export default function CreateEvent() {
         },
     });
 
+    const fileRef = useRef();
+    const dragRef = useRef(null);
+    const [prevImg, setPrevImg] = useState();
+    const [files, setFiles] = useState([]);
+
+    useEffect(() => {
+        updateNewUserData();
+    }, [prevImg]);
+
+    const updateNewUserData = async () => {
+        try {
+            if (files.length > 0) {
+                const data = new FormData();
+                data.append("file", files[0]);
+                data.append("upload_preset", "itlab_image_store_preset");
+                data.append("cloud_name", "dl8hmamey");
+                fetch("  https://api.cloudinary.com/v1_1/dl8hmamey/image/upload", {
+                    method: "post",
+                    body: data,
+                })
+                    .then((resp) => resp.json())
+                    .then((data) => {
+                        setEvent({ ...newUser, img: data.url });
+                    })
+                    .catch((err) => console.log(err));
+
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('Something went wrong');
+        }
+
+    }
+
+    const handleFileBtnClick = () => {
+        fileRef.current.click();
+    };
+
+    const process = (file) => {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function (event) {
+            const imgElement = document.createElement("img");
+            imgElement.src = event.target.result;
+
+            imgElement.onload = function (e) {
+                const canvas = document.createElement("canvas");
+                const MAX_WIDTH = 300;
+
+                const scaleSize = MAX_WIDTH / e.target.width;
+                canvas.width = MAX_WIDTH;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx = canvas.getContext("2d");
+
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height);
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg");
+                setPrevImg(srcEncoded);
+            };
+        };
+    };
+
+    const handleFile = async (e) => {
+        e.preventDefault();
+        for (let i = 0; i < e.target.files.length; i++) {
+            setFiles((prevFiles) => {
+                return [...prevFiles, e.target.files[i]];
+            });
+        }
+        await process(e.target.files[0]);
+    };
+
+    const handleDrag = (e, type) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (type === "dragOver") dragRef.current.classList.add("active");
+        else if (type === "dragLeave") dragRef.current.classList.remove("active");
+    };
+
+    const handleDrop = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dragRef.current.classList.remove("active");
+        const uploadedFiles = e.dataTransfer.files;
+        dragRef.current.classList.add("uploading");
+        for (let i = 0; i < uploadedFiles.length; i++) {
+            setFiles((prevFiles) => {
+                return [...prevFiles, uploadedFiles[i]];
+            });
+        }
+        await process(uploadedFiles[0]);
+        dragRef.current.classList.remove("uploading");
+    };
+
     const createEvent = async () => {
         try {
             setLoading(true);
@@ -52,8 +153,8 @@ export default function CreateEvent() {
     }
 
     return (
-        <div className="w-full">
-            <h1 className="text-2xl font-bold my-5 mb-7">{`Create Event ${loading}`}</h1>
+        <div className="w-full text-xl">
+            <h1 className="text-4xl font-bold my-5 mb-7">{`Create Event`}</h1>
             <div className="w-full h-1/2 rounded-md">
                 <div className="flex gap-10">
                     <InputField
@@ -76,12 +177,41 @@ export default function CreateEvent() {
                         value={event.commitee}
                     />
                 </div>
-                <InputField
-                    type={"file"}
-                    label="Event Image"
-                    key="event_image"
-                    value={event.img}
-                />
+
+                <div className={styles.file_upload}>
+                    <h3>Add banner</h3>
+                    {files.length === 0 ? (
+                        <div className={styles.upload_img}>
+                            <div
+                                ref={dragRef}
+                                className={styles.drop_area}
+                                onDragOver={(e) => handleDrag(e, "dragOver")}
+                                onDragLeave={(e) => handleDrag(e, "dragLeave")}
+                                onDrop={handleDrop}
+                            >
+                                <h2>Drag & Drop your profile photo here</h2>
+                                <span>OR</span>
+                                <div className={styles.browse_btn} onClick={handleFileBtnClick}>
+                                    Browse Files
+                                </div>
+                                <input
+                                    ref={fileRef}
+                                    type="file"
+                                    onChange={handleFile}
+                                    multiple
+                                    hidden
+                                    id="myFile"
+                                    name="filename"
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <div className={styles.image_preview}>
+                            <img id="prev-img" src={prevImg} alt="" />
+                        </div>
+                    )}
+                </div>
+
                 <div className="flex gap-10">
                     <InputField
                         type="date"

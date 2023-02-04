@@ -1,7 +1,7 @@
 import { store } from "@store/configureStore";
 import Layout from "@Container/Layout/Layout";
 import { ToastContainer } from "react-toastify";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.min.css";
 import "@assets/styles/globals.scss";
 import "@assets/styles/utils.scss";
