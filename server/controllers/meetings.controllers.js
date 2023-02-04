@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
 import Meetings from "../models/meetings.model.js";
-import { uuid as v4 } from "uuidv4";
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
 const CreateMeeting = async (req, res, next) => {
   try {
-    const meetingId = v4();
+    const meetingId = uuidv4();
     const { userId, committee } = req.body;
     const meeting = await Meetings.create({
       meetingId,

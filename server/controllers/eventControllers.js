@@ -104,6 +104,7 @@ const createEvent = async (req, res, next) => {
       success: true,
       event: event,
     });
+    
   } catch (error) {
     next(error);
   }
