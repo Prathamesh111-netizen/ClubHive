@@ -29,6 +29,12 @@ const index = () => {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
+    API.get(`/faculty:${localStorage.getItem("user")}._id}`).then((res) => {
+      setUsers(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
     updateNewUserData();
   }, [prevImg]);
 
