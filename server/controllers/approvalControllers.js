@@ -6,7 +6,6 @@ const RequestApproveEvent = async (req, res, next) => {
   try {
     const { eventId } = req.params;
     const { users } = req.body;
-    console.log(users);
     users.map((userId) => Approval.create({ eventId, userId }));
 
     res.status(201).json({
