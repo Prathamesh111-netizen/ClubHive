@@ -79,6 +79,7 @@ const AdminSidebar = () => {
           <BiLogOut />
         </div>
       </div>
+      
     </div>
   );
 };
