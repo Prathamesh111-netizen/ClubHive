@@ -93,7 +93,7 @@ const updateCommittee = async (req, res) => {
 const deleteCommittee = async (req, res) => {
   try {
     const { committeeId } = req.params;
-    Committee.findByIdAndDelete(committeeId);
+    await Committee.findByIdAndDelete(committeeId);
     return res.status(200).json({
       success: true,
       message: "Committee deleted successfully",
