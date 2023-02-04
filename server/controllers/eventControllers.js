@@ -4,15 +4,34 @@ import Approval from "../models/Approval.model.js";
 import Room from "../models/room.model.js";
 import CalendarEvent from "../models/calendarEvent.model.js";
 // import
+import jwt from "jsonwebtoken";
+import EventRegistration from "../models/eventRegistration.model.js";
 
 dotenv.config();
 
 const getAllEvent = async (req, res, next) => {
   try {
-    const events = await Event.find({});
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.decode(token);
+
+    var events = await Event.find({});
+
+    const finalevents = [];
+    events.forEach(async (event) => {
+      var registeredEvents = await EventRegistration.find({
+        userId: decoded.id,
+        eventId: event._id,
+      });
+      if (registeredEvents.length == 0) {
+        finalevents.push({ event: event, registered: false });
+      } else {
+        finalevents.push({ event: event, registered: true });
+      }
+    });
+
     res.status(200).json({
       success: true,
-      events: events,
+      events: finalevents,
     });
   } catch (error) {
     next(error);
