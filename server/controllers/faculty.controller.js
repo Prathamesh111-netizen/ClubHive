@@ -17,7 +17,7 @@ const registerFaculty = async (req, res, next) => {
         profilePic,
         type,
       });
-      User.create({name, profilePic, email, type : "Faculty"})
+      User.create({ name, profilePic, email, type: "Mentor" });
       res.status(201).json({
         success: true,
         faculty: faculty,

@@ -8,7 +8,7 @@ const registerForEvent = async (req, res, next) => {
     const { userId  } = req.params;
     const { eventId } = req.body;
     if (eventId && userId) {
-      const registration = await CalendarEvent.create({ eventId, userId });
+      const registration = await EventRegistration.create({ eventId, userId });
       res.status(201).json({
         message: "Event registered successfully",
         registration: registration,
