@@ -1,6 +1,5 @@
-import Calendar from "@components/Calendar/Calendar";
-import React from "react";
-import styles from "./calendar.module.scss";
+import React from 'react'
+import styles from './calendar.module.scss'
 
 const Calendarr = () => {
   return (
@@ -10,4 +9,4 @@ const Calendarr = () => {
   );
 };
 
-export default Calendarr;
+export default calendar

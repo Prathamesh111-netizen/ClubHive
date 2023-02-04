@@ -29,6 +29,8 @@ export const logout = () => {
 
   return {
     type: actionTypes.AUTH_LOGOUT,
+    token: null,
+    user: null,
   };
 };
 

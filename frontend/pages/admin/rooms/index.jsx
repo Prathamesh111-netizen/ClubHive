@@ -6,6 +6,7 @@ import Loader from "@components/Loader/Loader";
 import Modal from "@components/UI/Modal/Modal";
 import styles from "./rooms.module.scss";
 import API from "@shared/API";
+import { toast } from "react-toastify";
 
 const index = () => {
   const [rooms, setRooms] = useState([]);
@@ -28,7 +29,8 @@ const index = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        setIsLoading(false);
+        toast.error("Something went wrong");
       });
   }, []);
 
@@ -57,36 +59,31 @@ const index = () => {
 
   if (switchToCalendar) {
     return (
-      <div>
-        <div>
-          <div class="flex align-center justify-center my-6 bg-red-100">
+      <div className="px-10">
+        <div >
+          <div class="flex align-center justify-between my-6 bg-red-100 p-5">
             <h1 class="text-6xl">
               <span>Room No: </span>
-              <input
-                value={roomSelected}
-                name="newRoomNo"
-                onChange={(event) => {
-                  setRoomSelected(event.target.value);
-                }}
-              ></input>
+              <span> {roomSelected}</span>
             </h1>
+            <button
+              class="text-xl font-bold inline"
+              onClick={() => {
+                let newRooms = rooms.map((room) => {
+                  if (room != oldRoomNo) {
+                    return room;
+                  } else {
+                    return roomSelected;
+                  }
+                });
+                setRooms(newRooms);
+                setSwitchToCalendar(false);
+              }}
+            >
+              Close
+            </button>
           </div>
-          <button
-            class="inline"
-            onClick={() => {
-              let newRooms = rooms.map((room) => {
-                if (room != oldRoomNo) {
-                  return room;
-                } else {
-                  return roomSelected;
-                }
-              });
-              setRooms(newRooms);
-              setSwitchToCalendar(false);
-            }}
-          >
-            Close
-          </button>
+
         </div>
         <Calendar committeeName={roomSelected}></Calendar>
       </div>
@@ -139,7 +136,7 @@ const index = () => {
                 return (
                   <div
                     key={i}
-                    class="bg-green-100 text-green-500 text-lg font-bold text-center p-10 rounded-lg hover:bg-green-200"
+                    class="bg-green-100 text-green-500 text-3xl font-bold text-center p-20 rounded-lg hover:bg-green-200"
                     onClick={() => {
                       setRoomSelected(room);
                       setOldRoomNo(room);
@@ -158,7 +155,7 @@ const index = () => {
                   setShowModal(true);
                   // setRooms([...rooms, rooms.length + 1]);
                 }}
-                class="flex justify-center items-center align-baseline w-24 h-24 bg-green-100 text-green-500 text-lg font-bold text-center rounded-full"
+                class="flex justify-center items-center align-baseline w-50 h-50 bg-green-100 text-green-500 text-6xl font-bold text-center rounded-full"
               >
                 <button>+</button>
               </div>

@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 const Login = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const JWT = useSelector((state) => state.auth.token);
+	const JWT = useSelector((state) => state.auth.JWT);
 	const user = useSelector((state) => state.auth.user);
 	const [loginData, setLoginData] = useState({
 		email: "",

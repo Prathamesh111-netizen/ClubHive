@@ -9,8 +9,6 @@ const Navbar = () => {
 	const router = useRouter();
 	const token = useSelector((state) => state.auth.token);
 	const [showNav, setShowNav] = useState(true)
-
-	console.log(token)
 	const menu = [
 		{
 			name: 'Home',
