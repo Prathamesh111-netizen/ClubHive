@@ -83,6 +83,8 @@ function Calendar(props) {
       })
       .then((res) => {
         setIsLoading(false);
+        console.log("res.data.events");
+        console.log(res.data.events);
         setMyEvents(res.data.events);
       })
       .catch((err) => {
@@ -108,6 +110,8 @@ function Calendar(props) {
   );
 
   const saveEvent = React.useCallback(() => {
+    console.log("tempEvent");
+    console.log(tempEvent);
     const newEvent = {
       id: tempEvent.id,
       title: popupEventTitle,
@@ -118,6 +122,7 @@ function Calendar(props) {
       status: popupEventStatus,
       color: tempEvent.color,
       color: selectedColor,
+      _days: tempEvent._days,
     };
     if (isEdit) {
       // update the event in the list
@@ -358,13 +363,11 @@ function Calendar(props) {
 
   const updateEvents = () => {
     //update in backend
-    console.log("myEvents");
-    console.log(myEvents);
     axios
       .put("http://localhost:8000/api/calendar/update-events", {
         data: {
           events: myEvents,
-          committeeName: "student-affairs",
+          committeeName: props.committeeName,
         },
       })
       .then((res) => {

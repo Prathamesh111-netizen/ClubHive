@@ -1,12 +1,8 @@
 import express from "express";
-import {
-  getRooms,
-  addRoom,
-  updateEvents,
-} from "../controllers/calendarEventControllers.js";
+import { createRoom, getRooms } from "../controllers/roomControllers.js";
 const router = express.Router();
 
-router.route("/get-events").get(getEvents);
-router.route("/update-events").put(updateEvents);
+router.route("/create-room").post(createRoom);
+router.route("/get-rooms").get(getRooms);
 
 export default router;
