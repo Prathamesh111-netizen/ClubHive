@@ -1,39 +1,49 @@
-import React, { useCallback, useEffect } from 'react'
-import styles from './AdminLayout.module.scss';
-import AdminSidebar from '@components/AdminSidebar/AdminSidebar';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '@actions/index';
-import Login from 'pages/login';
+import React, { useCallback, useEffect } from "react";
+import styles from "./AdminLayout.module.scss";
+import AdminSidebar from "@components/AdminSidebar/AdminSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "@actions/index";
+import Login from "pages/login";
 
 const AdminLayout = ({ children }) => {
-    const user = useSelector(state => state.auth.user);
-    const dispatch = useDispatch();
+  let user = useSelector((state) => state.auth.user);
+  try {
+    if (!user) user = JSON.parse(localStorage.getItem("user"));
+  } catch (err) {
+    console.log(err);
+  }
+  const dispatch = useDispatch();
 
-    const onTryAutoSignup = useCallback(
-        () => dispatch(actions.authCheckState()),
-        [dispatch]
-    );
+  const onTryAutoSignup = useCallback(
+    () => dispatch(actions.authCheckState()),
+    [dispatch]
+  );
 
-    useEffect(() => {
-        onTryAutoSignup();
-    }, [onTryAutoSignup]);
+  useEffect(() => {
+    onTryAutoSignup();
+  }, [onTryAutoSignup]);
 
-    return (
-        <div className={styles.Admin_layout}>
-            {
-                user ?
-                    <>
-                        <AdminSidebar />
-                        <div className={styles.outlet_wrapper}>
-                            {children}
-                        </div>
-                    </> : <>
-                        <Login />
-                    </>
-            }
+  const Direct = () => {
+    if (!user) {
+      return (
+        <>
+          <Login />
+        </>
+      );
+    }
+    if (user.type === "User") {
+      window.location.href = "/";
+    } else {
+      return (
+        <>
+          <AdminSidebar />
+          <div className={styles.outlet_wrapper}>{children}</div>
+        </>
+      );
+    }
+  };
 
-        </div>
-    )
-}
+  return <div className={styles.Admin_layout}>{<Direct />}</div>;
+};
 
-export default AdminLayout
+export default AdminLayout;
