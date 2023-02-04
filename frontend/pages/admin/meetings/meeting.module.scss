@@ -1,0 +1,77 @@
+@import "@assets/styles/variables.scss";
+
+.Meeting {
+  .card_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(39rem, 1fr));
+    grid-gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .head_list {
+    background: $neutral-000;
+    color: $neutral-600;
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 2rem;
+    border-bottom: 1px solid $neutral-100;
+
+    th {
+      padding: 2rem;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        font-size: 1.4rem;
+        color: $neutral-600;
+        padding: 1rem 2rem;
+        font-weight: 500;
+        color: $neutral-500;
+
+        img {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 0.8rem;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .del {
+      background: $primary-red;
+      color: $neutral-000;
+      border-radius: 0.6rem;
+      padding: 0.6rem 1rem;
+      width: max-content;
+      height: max-content;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 1.8rem;
+      cursor: pointer;
+
+      svg {
+        font-size: 1.4rem;
+      }
+    }
+    .reject {
+      background: $primary-green;
+      color: $neutral-000;
+      border-radius: 0.6rem;
+      padding: 0.6rem 1rem;
+      width: max-content;
+      height: max-content;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 1.8rem;
+      cursor: pointer;
+
+      svg {
+        font-size: 1.4rem;
+      }
+    }
+  }
+}

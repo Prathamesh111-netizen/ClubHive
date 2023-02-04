@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { TiTick } from "react-icons/ti"
 import { ImCross } from "react-icons/im"
 import API from "@shared/API";
+import { async } from "@firebase/util";
+import { toast } from "react-toastify";
 
 const index = () => {
   const [events, setEvents] = useState([
@@ -32,7 +34,7 @@ const index = () => {
       });
       setEvents(res.data.event);
     }
-    catch(error) {
+    catch (error) {
 
     }
     finally {
@@ -46,6 +48,47 @@ const index = () => {
 
   const [currentEvent, setCurrentEvent] = useState("");
 
+
+  const approveEvent = async (event) => {
+    try {
+      const res = await API.post(`/event/approve/${event._id}`, {
+        userId: user._id,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
+      console.log(res.data);
+      getEvents();
+      setShow(false);
+    }
+    catch (error) {
+
+    }
+    finally {
+      setShow(false)
+    }
+  }
+
+  const createMeeting = async (event) => {
+    try {
+      const res = await API.post(`/meetings`, {
+        userId: user._id,
+        committee: user.committee,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
+      toast.success("Meeting created successfully")
+      setShow(false)
+    }
+    catch (error) { }
+    finally {
+      setShow(false)
+    }
+  }
+
   console.log(user.type)
   console.log(user && (user.type === "Super" || user.type === "Dean Academics" || user.type === "Mentor"))
   console.log(currentEvent.description);
@@ -57,7 +100,11 @@ const index = () => {
             <div className={styles.Current_event + " flex flex-col"}>
               {currentEvent && <div className="text-5xl font-extrabold mx-auto">{currentEvent.title || "CSI Hackathon"}</div>}
               <img className="mx-auto my-10" width={500} height={500} src={currentEvent.img} />
-              <div className="text-xl" dangerouslySetInnerHTML={{ __html: currentEvent.description ? currentEvent.description : <h3></h3>}}></div>
+              <div className="text-xl" dangerouslySetInnerHTML={{ __html: currentEvent.description ? currentEvent.description : <h3></h3> }}></div>
+              <div className="flex mx-auto">
+                <button className="bg-green-600 px-6 py-2 text-white rounded-3xl text-lg mr-2 " onClick={() => { approveEvent(currentEvent) }}>Approve</button>
+                <button className="bg-purple-600 px-6 py-2 text-white rounded-3xl text-lg ml-2" onClick={() => { createMeeting(currentEvent) }}>Schedule Meet</button>
+              </div>
             </div>
           </Modal>
           {events.map((event, index) => {
@@ -79,7 +126,7 @@ const index = () => {
                     alt=""
                   />
                   <div className={styles.card_right}>
-                    <h3>{event.title ||  "CSI Hackathon"}</h3>
+                    <h3>{event.title || "CSI Hackathon"}</h3>
                     <p>Hosted by {event.committee || "CSI committee"}</p>
                   </div>
                 </div>
@@ -96,9 +143,9 @@ const index = () => {
                     <span></span>
                     <div className={styles.event_date}>
                       <BiTimeFive />
-                        {
-                          event.startDate === "" ? "12-03-2021 | 13-03-2021" : `${event.startDate} | ${event.endDate}`
-                        }
+                      {
+                        event.startDate === "" ? "12-03-2021 | 13-03-2021" : `${event.startDate} | ${event.endDate}`
+                      }
                     </div>
                     <span></span>
                     <div className={styles.price}>

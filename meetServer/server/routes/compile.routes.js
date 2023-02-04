@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express.Router();
+const axios = require("axios");
 
-app.post("/compile", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     const code = req.body.code;
     const input = req.body.input;
