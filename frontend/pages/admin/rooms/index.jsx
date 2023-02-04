@@ -22,7 +22,7 @@ const index = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/rooms/get-rooms")
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/rooms/get-rooms`)
       .then((response) => {
         setRooms(response.data.rooms.map((room) => room.roomNo));
         setIsLoading(false);
@@ -46,7 +46,7 @@ const index = () => {
     newRooms.push(newRoom.roomNo);
     setRooms(newRooms);
     await axios
-      .post("http://localhost:8000/api/rooms/create-room", newRoom)
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/rooms/create-room`, newRoom)
       .then((response) => {
         // log(response.data);
         setShowModal(false);
