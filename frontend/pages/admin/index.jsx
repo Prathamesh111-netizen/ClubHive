@@ -253,6 +253,7 @@ const index = () => {
               <td className={styles.list_item}>
                 <img
                   src={
+                    user.profilePic ||
                     "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
                   }
                   alt=""
