@@ -41,13 +41,14 @@ const createEvent = async (req, res, next) => {
       description,
       committee,
       img,
-      Budget,
-      Prize,
       startTime,
       endTime,
       startDate,
       endDate,
       rooms,
+      budget,
+      prize,
+      rooms
     } = req.body;
     title = title || "";
     description = description || "";
@@ -57,8 +58,8 @@ const createEvent = async (req, res, next) => {
     endTime = endTime || "";
     startDate = startDate || "";
     endDate = endDate || "";
-    Budget = Budget || "";
-    Prize = Prize || "";
+    budget = budget || "";
+    prize = prize || "";
     rooms = rooms || [];
 
     const event = await Event.create({
@@ -70,8 +71,8 @@ const createEvent = async (req, res, next) => {
       endDate,
       startTime,
       endTime,
-      Budget,
-      Prize,
+      budget,
+      prize,
       rooms,
     });
     res.status(201).json({
@@ -94,8 +95,9 @@ const updateEvent = async (req, res, next) => {
       rounds,
       startTine,
       endTime,
-      Budget,
-      Prize,
+      budget,
+      prize,
+      rooms
     } = req.body;
 
     const event = await Event.findById(eventId);
@@ -112,8 +114,9 @@ const updateEvent = async (req, res, next) => {
       rounds = rounds || event.rounds;
       startTine = startTine || event.startTine;
       endTime = endTime || event.endTime;
-      Budget = Budget || event.Budget;
-      Prize = Prize || event.Prize;
+      budget = Budget || event.Budget;
+      prize = Prize || event.Prize;
+      rooms = rooms || event.rooms;
 
       const updatedEvent = await Event.findByIdAndUpdate(
         eventId,
@@ -125,8 +128,9 @@ const updateEvent = async (req, res, next) => {
           rounds,
           startTine,
           endTime,
-          Budget,
-          Prize,
+          budget,
+          prize,
+          rooms,
         },
         { new: true }
       );
