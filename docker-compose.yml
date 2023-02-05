@@ -3,8 +3,8 @@ version: "3"
 services:
 
   backend:
-    image: "takey_pirates/backend"
-    container_name: "takey_pirates_backend"
+    image: "techie_pirates/backend"
+    container_name: "techie_pirates_backend"
     build:
       context: "server"
     ports:
@@ -17,3 +17,11 @@ services:
   #     context: "socket-io"
   #   ports:
   #     - "3001:3001"
+  #
+  frontend:
+    image: "techie_pirates"
+    container_name: "techie_pirates_frontend"
+    build:
+      context: "frontend"
+    ports:
+      - "80:80"
