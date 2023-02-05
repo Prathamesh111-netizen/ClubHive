@@ -129,13 +129,21 @@ const index = () => {
         setShow(false);
         setCommittees([...committees, res.data.committee]);
         setPrevImg(null);
+        setFiles([]);
       })
       .catch((err) => {
         setShow(false);
       });
   };
 
-  const deleteCommittee = (id) => { };
+  const deleteCommittee = (id) => {
+    API.delete(`/committee/${id}`).then((res) => {
+      const newCommittees = committees.filter((committee) => committee._id !== id);
+      setCommittees(newCommittees);
+    }).catch((err) => {
+      console.log(err);
+    })
+  };
 
   const onChange = (e) => {
     setNewCommittee({ ...newCommittee, [e.target.name]: e.target.value });
@@ -228,7 +236,7 @@ const index = () => {
         </div>
       </Modal>
       <BreadCrumb />
-      <div className="flex flex-row justify-between my-5">
+      <div className="flex flex-row justify-between">
         <h1>Faculty Instructor Accounts</h1>
         <button
           onClick={() => {
