@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
-import User from "../models/user.model.js";
+import Committee from "../models/Committee.model.js";
 import generateToken from "../utils/generateToken.js";
+import User from "../models/user.model.js";
+import committeeMemberModel from "../models/committee.member.model.js";
+import FacultyModel from "../models/Faculty.model.js";
 dotenv.config();
 
 const registerUser = async (req, res, next) => {
@@ -31,6 +34,52 @@ const registerUser = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    let committeeHeadsEmail = await Committee.findOne({
+      presidentEmail: email,
+    });
+    let facultyEmails = await FacultyModel.findOne({ email: email });
+    let userEmails = await User.findOne({ email: email });
+    let committeeMember = await committeeMemberModel.findOne({ email: email });
+    if (committeeHeadsEmail) {
+      const token = generateToken(committeeHeadsEmail._id);
+      res.status(200).json({
+        success: true,
+        message: "Correct credentials",
+        user: committeeHeadsEmail,
+        token: token,
+        type: "President",
+      });
+    }
+    if (facultyEmails) {
+      const token = generateToken(facultyEmails._id);
+      res.status(200).json({
+        success: true,
+        message: "Correct credentials",
+        user: facultyEmails,
+        token: token,
+        type: facultyEmails.type,
+      });
+    }
+    if (committeeMember) {
+      const token = generateToken(committeeMember._id);
+      res.status(200).json({
+        success: true,
+        message: "Correct credentials",
+        user: committeeMember,
+        token: token,
+        type: "Committee Member",
+      });
+    }
+    if (userEmails) {
+      const token = generateToken(userEmails._id);
+      res.status(200).json({
+        success: true,
+        message: "Correct credentials",
+        user: userEmails,
+        token: token,
+        type: userEmails.type,
+      });
+    }
     if (email && password) {
       const user = await User.findOne({ email });
       if (!user) {

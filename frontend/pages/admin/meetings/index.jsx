@@ -44,13 +44,18 @@ export default function Meetings() {
               className="border-b border-gray-200 hover:bg-gray-50 text-1xl"
             >
               <td className={styles.list_item + " px-8 py-4"}>
-                <a className="hover:text-blue-600 hover:underline text-blue-600" href={`http://localhost:5173/meeting/${meeting._id}`}>
+                <a
+                  className="hover:text-blue-600 hover:underline text-blue-600"
+                  href={`http://localhost:5173/meeting/${meeting._id}`}
+                >
                   Start Meeting
                 </a>
               </td>
               <td className={styles.list_item}>{meeting.meetingId}</td>
               <td className={styles.list_item}>{meeting.committee}</td>
-              <td className={styles.list_item}>{moment(meeting.createdAt).format('DD-MM-YY')}</td>
+              <td className={styles.list_item}>
+                {moment(meeting.createdAt).format("DD-MM-YY")}
+              </td>
             </tr>
           ))}
         </tbody>

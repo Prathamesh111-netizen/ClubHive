@@ -80,7 +80,10 @@ const getEventByCategory = async (req, res, next) => {
 const getEventByCommittee = async (req, res, next) => {
   try {
     const { committee } = req.query;
-    const event = await Event.find({ committee: committee, approvalStatus : "Pending" });
+    const event = await Event.find({
+      committee: committee,
+      approvalStatus: "Pending",
+    });
     if (!event) {
       res.status(400).json({
         success: false,
@@ -147,7 +150,6 @@ const createEvent = async (req, res, next) => {
 
     // send emails all faculty mentors , dean academics, president
     sendEmail("2002pratham1109@gmail.com");
-
   } catch (error) {
     next(error);
   }
