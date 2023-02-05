@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 var userModeSchema = mongoose.Schema({
-  name: { type: String,  },
+  name: { type: String, default: "None"  },
   department: { type: String, default: "None" },
-  profilePic: { type: String,  },
+  profilePic: { type: String, default: "None" },
   email: { type: String,  },
   password: {type: String, default : "123" },
   type: { type: String, default: "User" },
