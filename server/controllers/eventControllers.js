@@ -82,7 +82,6 @@ const getEventByCommittee = async (req, res, next) => {
     const { committee } = req.query;
     const event = await Event.find({
       committee: committee,
-      approvalStatus: "Pending",
     });
     if (!event) {
       res.status(400).json({
