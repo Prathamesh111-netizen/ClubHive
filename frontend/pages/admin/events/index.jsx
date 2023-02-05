@@ -25,13 +25,17 @@ const index = () => {
 
   const getEvents = async () => {
     try {
+      console.log("user.committee");
+      console.log(user);
       setLoading(true);
       API.get(`/event/comm/`, {
         params: {
-          committee: user.committee,
+          committee: user.name,
         },
       })
         .then((res) => {
+          console.log("res.data");
+          console.log(res.data);
           setLoading(false);
           setEvents(res.data.event);
         })
@@ -62,53 +66,57 @@ const index = () => {
             {currentEvent && <div>{currentEvent.title}</div>}
           </div>
         </Modal>
-        {events.length > 0 ? events.map((event, index) => {
-          return (
-            <div
-              className={styles.Approve_event_card}
-              key={index}
-              onClick={() => {
-                setShow(true);
-                setCurrentEvent(event);
-              }}
-            >
-              <div className={styles.card_top}>
-                <img
-                  src={
-                    event.img ||
-                    "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
-                  }
-                  alt=""
-                />
-                <div className={styles.card_right}>
-                  <h3>{event.title || "CSI Hackathon"}</h3>
-                  <p>Hosted by {event.committee || "CSI Committee"}</p>
-                </div>
-              </div>
-              <div className={styles.utils}>
-                <div className={styles.status}>{event.approvalStatus}</div>
-              </div>
-              <div className={styles.card_bottom}>
-                <div className={styles.info}>
-                  <div className={styles.event_type}>
-                    <SiHackthebox />
-                    {event.type || "Hackathon"}
-                  </div>
-                  <span></span>
-                  <div className={styles.event_date}>
-                    <BiTimeFive />
-                    12th - 13th March
-                  </div>
-                  <span></span>
-                  <div className={styles.price}>
-                    <IoPricetagOutline />
-                    ₹100
+        {events.length > 0 ? (
+          events.map((event, index) => {
+            return (
+              <div
+                className={styles.Approve_event_card}
+                key={index}
+                onClick={() => {
+                  setShow(true);
+                  setCurrentEvent(event);
+                }}
+              >
+                <div className={styles.card_top}>
+                  <img
+                    src={
+                      event.img ||
+                      "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
+                    }
+                    alt=""
+                  />
+                  <div className={styles.card_right}>
+                    <h3>{event.title || "CSI Hackathon"}</h3>
+                    <p>Hosted by {event.committee || "CSI Committee"}</p>
                   </div>
                 </div>
+                <div className={styles.utils}>
+                  <div className={styles.status}>{event.approvalStatus}</div>
+                </div>
+                <div className={styles.card_bottom}>
+                  <div className={styles.info}>
+                    <div className={styles.event_type}>
+                      <SiHackthebox />
+                      {event.type || "Hackathon"}
+                    </div>
+                    <span></span>
+                    <div className={styles.event_date}>
+                      <BiTimeFive />
+                      12th - 13th March
+                    </div>
+                    <span></span>
+                    <div className={styles.price}>
+                      <IoPricetagOutline />
+                      ₹100
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        }) : <h2>Add events to get approval from mentors and dean</h2>}
+            );
+          })
+        ) : (
+          <h2>Add events to get approval from mentors and dean</h2>
+        )}
       </div>
     </div>
   );

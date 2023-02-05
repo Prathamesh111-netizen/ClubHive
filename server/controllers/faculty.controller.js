@@ -17,7 +17,17 @@ const registerFaculty = async (req, res, next) => {
         profilePic,
         type,
       });
-      User.create({ name, profilePic, email, type: "Mentor" });
+      const user = await User.find({ email: email });
+      if (user) {
+        User.findByIdAndUpdate(user._id, {
+          name: name,
+          email: email,
+          profilePic: profilePic,
+          type: type,
+        });
+      } else {
+        User.create({ name, profilePic, email, type: "Mentor" });
+      }
       res.status(201).json({
         success: true,
         faculty: faculty,

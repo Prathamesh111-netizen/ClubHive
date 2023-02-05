@@ -236,8 +236,8 @@ const index = () => {
         </div>
       </Modal>
       <BreadCrumb />
-      <div className="flex flex-row justify-between">
-        <h1>Faculty Instructor Accounts</h1>
+      <div className="flex flex-row justify-between my-5">
+        <h1>Create A Committee</h1>
         <button
           onClick={() => {
             setShow(true);

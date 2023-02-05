@@ -24,7 +24,7 @@ const index = () => {
     try {
       if (user) {
         const res = await API.get(
-          `/event/comm`,
+          `/event/comm/pending`,
           {
             params: {
               committee: user?.committee,
@@ -52,13 +52,15 @@ const index = () => {
   const approveEvent = async (event) => {
     try {
       const res = await API.post(
-        `/event/approve/${event._id}`, {
-        userId: user._id,
-      }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        `/event/approve/${event._id}`,
+        {
+          userId: user._id,
         },
-      }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       getEvents();
       setShow(false);
@@ -94,8 +96,8 @@ const index = () => {
   return (
     <div className={styles.Approve + " text-4xl"}>
       {user?.type === "Super" ||
-        user?.type === "Dean Academics" ||
-        user?.type === "Mentor" ? (
+      user?.type === "Dean Academics" ||
+      user?.type === "Mentor" ? (
         <div className={styles.card_container}>
           <Modal show={show} hideBackdrop={() => setShow(false)}>
             <div className={styles.Current_event + " flex flex-col"}>
@@ -140,8 +142,8 @@ const index = () => {
               </div>
             </div>
           </Modal>
-          {
-            events.length > 0 ? events.map((event, index) => {
+          {events.length > 0 ? (
+            events.map((event, index) => {
               return (
                 <div
                   className={styles.Approve_event_card}
@@ -190,7 +192,10 @@ const index = () => {
                   </div>
                 </div>
               );
-            }) : <div className="text-6xl font-extrabold ">No events to approve</div>}
+            })
+          ) : (
+            <div className="text-6xl font-extrabold ">No events to approve</div>
+          )}
         </div>
       ) : (
         <div className="my-8">
