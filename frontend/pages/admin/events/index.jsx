@@ -62,7 +62,7 @@ const index = () => {
             {currentEvent && <div>{currentEvent.title}</div>}
           </div>
         </Modal>
-        {events.map((event, index) => {
+        {events.length > 0 ? events.map((event, index) => {
           return (
             <div
               className={styles.Approve_event_card}
@@ -108,7 +108,7 @@ const index = () => {
               </div>
             </div>
           );
-        })}
+        }) : <h2>Add events to get approval from mentors and dean</h2>}
       </div>
     </div>
   );

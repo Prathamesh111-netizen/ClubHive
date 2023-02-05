@@ -128,13 +128,14 @@ const index = () => {
       .then((res) => {
         setShow(false);
         setCommittees([...committees, res.data.committee]);
+        setPrevImg(null);
       })
       .catch((err) => {
         setShow(false);
       });
   };
 
-  const deleteCommittee = (id) => {};
+  const deleteCommittee = (id) => { };
 
   const onChange = (e) => {
     setNewCommittee({ ...newCommittee, [e.target.name]: e.target.value });

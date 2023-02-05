@@ -14,7 +14,7 @@ export default function BreadCrumb() {
     const pathArrayLength = pathArray.length;
     const pathArrayCapitalized = pathArray.map((text) => (text.charAt(0).toUpperCase() + text.slice(1)));
     return (
-        <div className="flex items-center my-3">
+        <div className="flex items-center my-3 mt-0 text-xl">
             <div className="flex items-center">
                 <div className="text-gray-500 ">
                     <AiFillHome />
@@ -26,13 +26,13 @@ export default function BreadCrumb() {
             {pathArrayCapitalized.map((text, index) => {
                 if (index === pathArrayLength - 1) {
                     return (
-                        <div key={"div-"+index} className="flex items-center">
+                        <div key={"div-" + index} className="flex items-center">
                             <div className="text-blue-700 px-2 py-1 bg-blue-50 font-semibold rounded-md">{text}</div>
                         </div>
                     )
                 }
                 return (
-                    <div key={"div-"+index} className="flex items-center">
+                    <div key={"div-" + index} className="flex items-center">
                         <div className="text-gray-500 ">{text}</div>
                         <div className="text-gray-500 mx-2">&gt;</div>
                     </div>

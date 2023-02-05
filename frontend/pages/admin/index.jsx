@@ -125,6 +125,7 @@ const index = () => {
       .then((res) => {
         setShow(false);
         setUsers([...users, res.data.faculty]);
+        setPrevImg(null);
       })
       .catch((err) => {
         console.log(err);
