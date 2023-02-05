@@ -49,11 +49,15 @@ const index = () => {
   const [currentEvent, setCurrentEvent] = useState("");
 
   const approveEvent = async (event) => {
+    console.log("event");
+    console.log(event);
     try {
       const res = await API.post(
         `/event/approve/${event._id}`,
         {
           userId: user._id,
+          committee: event.committee,
+          deviceToken: localStorage.getItem("deviceToken"),
         },
         {
           headers: {
