@@ -10,10 +10,8 @@ import {
 
 const router = express.Router();
 
-router.route("/register").post(registerFaculty);
-router.route("/").get(getFaculty);
 router.route("/:facultyId").delete(deleteFaculty).get(getFacultyById);
-
 router.route("/all_approve_req/:facultyId").get(AllApproveReq);
+router.route("/").post(registerFaculty).get(getFaculty);
 
 export default router;

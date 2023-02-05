@@ -18,15 +18,22 @@ const registerFaculty = async (req, res, next) => {
         type,
       });
       const user = await User.find({ email: email });
+      console.log(user)
       if (user) {
-        User.findByIdAndUpdate(user._id, {
+        const newUser = await User.findByIdAndUpdate(user._id, {
+          name: name,
+          email: email,
+          profilePic: profilePic,
+          type: type,
+        }, {new: true});
+        
+      } else {
+        User.create({
           name: name,
           email: email,
           profilePic: profilePic,
           type: type,
         });
-      } else {
-        User.create({ name, profilePic, email, type: "Mentor" });
       }
       res.status(201).json({
         success: true,
