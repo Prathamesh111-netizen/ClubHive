@@ -15,6 +15,7 @@ import FacultyRoutes from "./routes/faculty.routes.js";
 import CommitteeMembersRouters from "./routes/committee.members.routes.js";
 import MeetingsRouters from "./routes/meetings.routes.js";
 import EventRegistraionRouters from "./routes/event.reg.routes.js";
+import { Rooms } from "./controllers/approvalControllers.js";
 
 dotenv.config();
 const app = express();
@@ -66,6 +67,8 @@ app.get("/", (req, res) => {
 app.get("/favico.ico", (req, res) => {
   res.sendStatus(404);
 });
+
+app.use("/api/test", Rooms);
 
 // middleware to act as fallback for all 404 errors
 app.use(notFound);
