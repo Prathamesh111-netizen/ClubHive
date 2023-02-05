@@ -99,6 +99,26 @@ const getEventByCommittee = async (req, res, next) => {
   }
 };
 
+const getPendingEventByCommittee = async (req, res, next) => {
+  try {
+    const event = await Event.find({
+      approvalStatus: "Pending",
+    });
+    if (!event) {
+      res.status(400).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      event: event,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createEvent = async (req, res, next) => {
   try {
     var {
@@ -303,4 +323,5 @@ export {
   ApprovalStatus,
   getEventByCommittee,
   getEventByCategory,
+  getPendingEventByCommittee,
 };

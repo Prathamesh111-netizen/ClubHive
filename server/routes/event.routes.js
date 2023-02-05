@@ -7,6 +7,7 @@ import {
   deleteEvent,
   ApprovalStatus,
   getEventByCommittee,
+  getPendingEventByCommittee,
   getEventByCategory,
 } from "../controllers/eventControllers.js";
 
@@ -25,6 +26,7 @@ router.route("/approve/:eventId").post(ApproveEvent);
 router.route("/reject/:eventId").post(disApproveEvent);
 
 router.route("/comm").get(getEventByCommittee);
+router.route("/comm/pending").get(getPendingEventByCommittee);
 
 router.route("/ApprovalStatus/:eventId").get(ApprovalStatus);
 
