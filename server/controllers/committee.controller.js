@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import Committee from "../models/Committee.model.js";
+import User from "../models/user.model.js";
 dotenv.config();
 
 const getAllCommittee = async (req, res, next) => {
@@ -27,7 +28,7 @@ const getCommitteeById = async (req, res, next) => {
   }
 };
 
-const createCommittee = async (req, res) => {
+const createCommittee = async (req, res, next) => {
   try {
     const { name, description, presidentEmail, profilePic, type } = req.body;
     if (name && description && presidentEmail && profilePic) {
@@ -38,6 +39,18 @@ const createCommittee = async (req, res) => {
         profilePic,
         type,
       });
+
+      const user = await User.findOne({ email: presidentEmail });
+      if (user) {
+         User.findByIdAndUpdate(user._id, { committee: name });
+      } else {
+         User.create({
+          email: presidentEmail,
+          committee: name,
+          type : "President"
+        });
+      }
+
       res.status(201).json({
         success: true,
         message: "Committee created successfully",
