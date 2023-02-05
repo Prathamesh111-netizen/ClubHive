@@ -1,13 +1,17 @@
+import axios from "axios";
 import dotenv from "dotenv";
 import Approval from "../models/Approval.model.js";
+import CommitteeModel from "../models/Committee.model.js";
 import Event from "../models/event.model.js";
-import Room from "../models/room.model.js";
 import calendarEvent from "../models/calendarEvent.model.js"
+import sendEmail from "../utils/mail.js";
 dotenv.config();
 
 
 
-const Rooms = async (startDate, endDate) => {
+const Rooms = async (req, res, next) => {
+  var startDate = new Date(req.startDate).getTime();
+  var endDate = new Date(req.endDate).getTime();
   const calendarEvents = await calendarEvent.find({});
   const roomStartTime = new Date(startDate).getTime();
   const roomEndtime = new Date(endDate).getTime();
@@ -24,7 +28,7 @@ const Rooms = async (startDate, endDate) => {
   canBeAssigned.map((event) => {
     uniqueRooms.add(Rooms.findById({_id: event._id}));
   });
-  return {rooms: uniqueRooms.map(x => {return x})}
+  res.send({rooms: uniqueRooms.map(x => {return x})})
 }
 
 const RequestApproveEvent = async (req, res, next) => {
@@ -44,10 +48,10 @@ const RequestApproveEvent = async (req, res, next) => {
 
 const ApproveEvent = async (req, res, next) => {
   try {
-    console.log(req)
+    console.log(req);
     const { eventId } = req.params;
-    const { userId } = req.body;
-    const approval = await Approval.find({ eventId : eventId, userId : userId });
+    const { userId, committee, deviceToken } = req.body;
+    const approval = await Approval.find({ eventId: eventId, userId: userId });
     if (!approval) {
       return res.status(400).json({
         success: false,
@@ -67,7 +71,20 @@ const ApproveEvent = async (req, res, next) => {
       { new: true }
     );
 
-    const roomm = await Rooms();
+    const presidentEmail = CommitteeModel.findOne(
+      { name: committee },
+      { email: 1, _id: 0 }
+    );
+    //write email approved,
+    sendEmail(presidentEmail);
+
+    await axios.post("https://fcm.googleapis.com/fcm/send", {
+      to: deviceToken,
+      notification: {
+        body: "Approval or Event",
+        title: "Your evevnt has been aprroved by dean of your college",
+      },
+    });
 
     res.status(201).json({
       success: true,

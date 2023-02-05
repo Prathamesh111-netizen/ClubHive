@@ -75,6 +75,7 @@ const index = () => {
         var data;
         API.post(`/razorpay/order?amount=${amount}&currency=${"INR"}`, {})
             .then((response) => {
+                const ops = response.data;
                 const options = {
                     key: "rzp_test_6MRZgh5jRieE5u",
                     currency: ops.currency,
@@ -85,6 +86,7 @@ const index = () => {
                     image: "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557",
                     handler: function (razorpayResponse) {
                         toast.success("Payment Successful");
+                        setCurrentActiveEvent({ ...currentActiveEvent, registered: true })
                         API.post(`/event_reg/${user._id}`, {
                             eventId: currentActiveEvent._id,
                         })
@@ -232,9 +234,14 @@ const index = () => {
                                             </div>
                                         </div>
                                         <div className={styles.utils}>
-                                            <div className={styles.btn_primary} onClick={displayRazorpay}>
-                                                Register
-                                            </div>
+                                            {
+                                                currentActiveEvent.registered ? <div className={styles.btn_secondary}>
+                                                    Registered
+                                                </div> : <div className={styles.btn_primary} onClick={displayRazorpay}>
+                                                    Register
+                                                </div>
+                                            }
+
                                         </div>
                                     </div>
                                 </div>

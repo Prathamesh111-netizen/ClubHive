@@ -128,9 +128,9 @@ const index = () => {
             </form>
           </div>
         </Modal>
-        <div className="ml-10">
+        <div className="ml-10 mt-8">
           <BreadCrumb />
-          <div class="min-h-screen flex items-center justify-center">
+          <div class="mt-20 flex items-center justify-center">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
               {rooms.map((room, i) => {
                 return (

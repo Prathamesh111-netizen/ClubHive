@@ -213,7 +213,8 @@
           margin-top: 1rem;
           width: max-content;
 
-          .btn_primary {
+          .btn_primary,
+          .btn_secondary {
             font-size: 1.6rem;
             font-weight: 500;
             background: $primary-blue;
@@ -221,6 +222,12 @@
             color: $neutral-000;
             border-radius: 0.7rem;
             cursor: pointer;
+          }
+
+          .btn_secondary {
+            background: transparent;
+            color: $primary-green;
+            border: 1px solid $primary-green;
           }
         }
       }
