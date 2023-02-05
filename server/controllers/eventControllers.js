@@ -7,6 +7,7 @@ import CalendarEvent from "../models/calendarEvent.model.js";
 import jwt from "jsonwebtoken";
 import EventRegistration from "../models/eventRegistration.model.js";
 import sendEmail from "../utils/mail.js";
+import axios from "axios";
 
 dotenv.config();
 
@@ -82,7 +83,6 @@ const getEventByCommittee = async (req, res, next) => {
     const { committee } = req.query;
     const event = await Event.find({
       committee: committee,
-      approvalStatus: "Pending",
     });
     if (!event) {
       res.status(400).json({
@@ -170,6 +170,14 @@ const createEvent = async (req, res, next) => {
 
     // send emails all faculty mentors , dean academics, president
     sendEmail("2002pratham1109@gmail.com");
+    sendEmail("noman.khan@spit.ac.in");
+    await axios.post("https://fcm.googleapis.com/fcm/send", {
+      to: "fsjEcIUUJr_ZQQDNIf1UfU:APA91bEvck_SCBdinwlnn07t74-u27LhdQTZy1vvH54hcSpvMwvvdLl2j-0N2-PGtPKKJl1g41P_1_rnSfjJZSjKNivWKditwznwxgAJvA1ZQVZPJ7KXWBCd7-cZ5k1_gaVTcoy4HBTw",
+      notification: {
+        title: "New Event",
+        body: "New Event has been added",
+      },
+    });
   } catch (error) {
     next(error);
   }
