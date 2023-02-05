@@ -5,30 +5,38 @@ import CommitteeModel from "../models/Committee.model.js";
 import Event from "../models/event.model.js";
 import calendarEvent from "../models/calendarEvent.model.js"
 import sendEmail from "../utils/mail.js";
+import Room from "../models/room.model.js";
 dotenv.config();
 
 
 
 const Rooms = async (req, res, next) => {
-  var startDate = new Date(req.startDate).getTime();
-  var endDate = new Date(req.endDate).getTime();
+  var startDate = new Date(req.body.startDate).getTime();
+  var endDate = new Date(req.body.endDate).getTime();
   const calendarEvents = await calendarEvent.find({});
   const roomStartTime = new Date(startDate).getTime();
   const roomEndtime = new Date(endDate).getTime();
   const canBeAssigned = new Array();
+  var result = {lab: 0, hall: 0, classroom: 0, auditorium: 0}
+  var temp = { lab: new Set(), hall: new Set(), classroom: new Set(), auditorium: new Set() }
   for(let event in calendarEvents) {
     var curStartTime = new Date(calendarEvents[event].start).getTime();
     var curEndTime = new Date(calendarEvents[event].end).getTime();
     if(curEndTime < roomStartTime || roomEndtime < curStartTime) {
-      canBeAssigned.push(calendarEvents[event]);
       continue;
     }
+    canBeAssigned.push(calendarEvents[event]);
+    var newRoom = await Room.findOne({committeeName: calendarEvents[event].committeeName});
+    temp[newRoom.type].add(calendarEvents[event].committeeName);
   }
-  var uniqueRooms = new Set();
-  canBeAssigned.map((event) => {
-    uniqueRooms.add(Rooms.findById({_id: event._id}));
-  });
-  res.send({rooms: uniqueRooms.map(x => {return x})})
+  const sss = await Room.find({});
+  sss.map((room) => {
+    result[room.type]++;
+  })
+  res.send({
+    rooms: {lab: temp.lab.size, hall: temp.hall.size, classroom: temp.classroom.size, auditorium: temp.auditorium.size},
+    result: result
+  })
 }
 
 const RequestApproveEvent = async (req, res, next) => {
