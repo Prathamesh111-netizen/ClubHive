@@ -20,11 +20,12 @@ const RequestApproveEvent = async (req, res, next) => {
 
 const ApproveEvent = async (req, res, next) => {
   try {
+    console.log(req)
     const { eventId } = req.params;
     const { userId } = req.body;
-    const approval = await Approval.findOne({ eventId, userId });
+    const approval = await Approval.find({ eventId : eventId, userId : userId });
     if (!approval) {
-      return res.status(404).json({
+      return res.status(400).json({
         success: false,
         message: "Approval not found",
       });
@@ -36,7 +37,7 @@ const ApproveEvent = async (req, res, next) => {
       { new: true }
     );
 
-    const event = Event.findByIdAndUpdate(
+    const event = await Event.findByIdAndUpdate(
       eventId,
       { approvalStatus: "Approved" },
       { new: true }
