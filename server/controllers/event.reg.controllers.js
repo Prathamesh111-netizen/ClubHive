@@ -27,6 +27,12 @@ const allRegisteredEvents = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const registrations = await EventRegistration.find({ userId: userId });
+    var events = [];
+    for (var reg of registrations) {
+      const event = await Event.findById(reg.eventId);
+      events.push(event);
+    }
+
     res.status(200).json({
       success: true,
       registrations: registrations,
