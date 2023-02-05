@@ -171,6 +171,10 @@ const createEvent = async (req, res, next) => {
     // send emails all faculty mentors , dean academics, president
     sendEmail("2002pratham1109@gmail.com");
     sendEmail("noman.khan@spit.ac.in");
+    axios.defaults.headers.post[
+      "Authorization"
+    ] = `key=AAAAaO0tWf4:APA91bGbjgLuq1qgpOxgS7_i2lRpP5IqIe8H7g3n7SeoBBL4MpVOp_hLG_kOrDI_1tsuOLpUc3shLo_16NNSj2jaHdcVKiHdTlN2BoZQVfXy-zXqIJeeN03P-f6VQHXXsKbIGHVZq-hO`;
+    axios.defaults.headers.post["Content-Type"] = "application/json";
     await axios.post("https://fcm.googleapis.com/fcm/send", {
       to: "fsjEcIUUJr_ZQQDNIf1UfU:APA91bEvck_SCBdinwlnn07t74-u27LhdQTZy1vvH54hcSpvMwvvdLl2j-0N2-PGtPKKJl1g41P_1_rnSfjJZSjKNivWKditwznwxgAJvA1ZQVZPJ7KXWBCd7-cZ5k1_gaVTcoy4HBTw",
       notification: {
