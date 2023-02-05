@@ -13,7 +13,6 @@ import BreadCrumb from '@components/Navbar/BreadCrumb';
 import { uploadImage } from '@shared/utility';
 
 export default function CreateEvent() {
-
     const { loading, setLoading } = useContext(LoaderContext);
     const router = useRouter();
 
@@ -57,7 +56,8 @@ export default function CreateEvent() {
                 })
                     .then((resp) => resp.json())
                     .then((data) => {
-                        setEvent({ ...newUser, img: data.url });
+                        console.log(data.url);
+                        setEvent({ ...event, img: data.url });
                     })
                     .catch((err) => console.log(err));
 
@@ -227,7 +227,7 @@ export default function CreateEvent() {
                     <InputField
                         type="date"
                         placeholder="2021-12-31 23:59:59"
-                        key={"event_start_time"}
+                        key={"event_start_date"}
                         label="Start Date"
                         value={event.startDate}
                         className="w-full px-4"

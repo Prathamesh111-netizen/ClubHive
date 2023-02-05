@@ -126,6 +126,7 @@ const index = () => {
         setShow(false);
         setUsers([...users, res.data.faculty]);
         setPrevImg(null);
+        setFiles([]);
       })
       .catch((err) => {
         console.log(err);

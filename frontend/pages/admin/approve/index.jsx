@@ -10,6 +10,7 @@ import { ImCross } from "react-icons/im";
 import API from "@shared/API";
 import { async } from "@firebase/util";
 import { toast } from "react-toastify";
+import BreadCrumb from "@components/Navbar/BreadCrumb";
 
 const index = () => {
   const [events, setEvents] = useState([]);
@@ -201,49 +202,58 @@ const index = () => {
           )}
         </div>
       ) : (
-        <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
-          <thead className={styles.head_list}>
-            <th scope="col" className={styles.list_item}>
-              Name
-            </th>
-            <th scope="col" className={styles.list_item}>
-              Email Id
-            </th>
-            <th scope="col" className={styles.list_item}>
-              Timestamp
-            </th>
-            <th scope="col" className={styles.list_item}>
-              Approve
-            </th>
-            <th scope="col" className={styles.list_item}>
-              Reject
-            </th>
-          </thead>
-          <tbody className={styles.row_list}>
-            {members.map((user, index) => (
-              <tr
-                key={index}
-                className="border-b border-gray-200 hover:bg-gray-50"
-              >
-                <td className={styles.list_item}>{user?.name}</td>
-                <td className={styles.list_item}>{user?.email}</td>
-                <td className={styles.list_item}>{user?.timestamp}</td>
-                <td className={styles.list_item}>
-                  <div className="flex bg-green-500 rounded-3xl w-40 px-4 py-4 text-white">
-                    <TiTick />
+        <div className="my-8">
+          <BreadCrumb />
+          {
+            members && members.length > 0 ? (
+              <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 mt-10">
+                <thead className={styles.head_list}>
+                  <th scope="col" className={styles.list_item}>
+                    Name
+                  </th>
+                  <th scope="col" className={styles.list_item}>
+                    Email Id
+                  </th>
+                  <th scope="col" className={styles.list_item}>
+                    Timestamp
+                  </th>
+                  <th scope="col" className={styles.list_item}>
                     Approve
-                  </div>
-                </td>
-                <td className={styles.list_item}>
-                  <div className="flex bg-red-500 rounded-3xl w-40 px-4 py-4 text-white">
-                    <ImCross className="mx-2" size={10} />
+                  </th>
+                  <th scope="col" className={styles.list_item}>
                     Reject
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </th>
+                </thead>
+                <tbody className={styles.row_list}>
+                  {members.map((user, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-gray-200 hover:bg-gray-50"
+                    >
+                      <td className={styles.list_item}>{user?.name}</td>
+                      <td className={styles.list_item}>{user?.email}</td>
+                      <td className={styles.list_item}>{user?.timestamp}</td>
+                      <td className={styles.list_item}>
+                        <div className="flex bg-green-500 rounded-3xl w-40 px-4 py-4 text-white">
+                          <TiTick />
+                          Approve
+                        </div>
+                      </td>
+                      <td className={styles.list_item}>
+                        <div className="flex bg-red-500 rounded-3xl w-40 px-4 py-4 text-white">
+                          <ImCross className="mx-2" size={10} />
+                          Reject
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="text-6xl font-bold mt-10">No members to approve</div>
+            )
+          }
+        </div>
       )}
     </div>
   );
