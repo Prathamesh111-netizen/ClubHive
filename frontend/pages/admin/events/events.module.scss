@@ -25,6 +25,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(39rem, 1fr));
     grid-gap: 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: $neutral-600;
+      margin-bottom: 1rem;
+    }
   }
 
   .Approve_event_card {

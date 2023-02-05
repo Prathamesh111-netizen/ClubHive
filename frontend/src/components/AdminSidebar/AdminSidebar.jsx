@@ -2,13 +2,20 @@ import React from "react";
 import styles from "./AdminSidebar.module.scss";
 import Logo from "@assets/images/logo_white.png";
 import { AiFillHome } from "react-icons/ai";
+import { SiGooglemeet } from "react-icons/si";
+import { MdMeetingRoom } from 'react-icons/md'
 import { BiLogOut } from "react-icons/bi";
+import { BsFillPersonPlusFill } from "react-icons/bs";
+import { MdEvent } from 'react-icons/md'
+import { TiTick } from 'react-icons/ti'
+import { BsSuitClubFill } from 'react-icons/bs'
 import { useRouter } from "next/router";
 import Link from "next/link";
 import avatar from "@assets/images/avatar.jpg";
 
 const AdminSidebar = () => {
   const router = useRouter();
+  const user = JSON.parse(localStorage.getItem("user"));
   const menu = [
     {
       name: "Dashboard",
@@ -17,29 +24,34 @@ const AdminSidebar = () => {
     },
     {
       name: "Committee",
-      icon: <AiFillHome />,
+      icon: <BsSuitClubFill />,
       link: "/admin/committee",
     },
     {
       name: "Approve",
-      icon: <AiFillHome />,
+      icon: <TiTick />,
       link: "/admin/approve",
     },
     {
       name: "Members",
-      icon: <AiFillHome />,
+      icon: <BsFillPersonPlusFill />,
       link: "/admin/user",
     },
     {
       name: "Events",
-      icon: <AiFillHome />,
+      icon: <MdEvent />,
       link: "/admin/events",
     },
     {
       name: "Rooms",
-      icon: <AiFillHome />,
+      icon: <MdMeetingRoom />,
       link: "/admin/rooms",
     },
+    {
+      name: "Meeting",
+      icon: <SiGooglemeet />,
+      link: "/admin/meetings",
+    }
     // {
 
     // }
@@ -68,8 +80,11 @@ const AdminSidebar = () => {
       </div>
       <div className={styles.bottom}>
         <div className={styles.user}>
-          <img src={avatar.src} alt="" />
-          <div className={styles.name}>Noman</div>
+          <img src={user.profilePic || avatar.src} alt="" />
+          <div className={styles.info}>
+            <div className={styles.name}>{user.name}</div>
+            <div className={styles.type}>{user.type}</div>
+          </div>
         </div>
         <div className={styles.logout} onClick={() => {
           localStorage.removeItem('token');
@@ -79,7 +94,7 @@ const AdminSidebar = () => {
           <BiLogOut />
         </div>
       </div>
-      
+
     </div>
   );
 };

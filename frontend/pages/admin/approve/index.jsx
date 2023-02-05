@@ -51,19 +51,17 @@ const index = () => {
   const approveEvent = async (event) => {
     try {
       const res = await API.post(
-        `/event/approve/${event._id}`,
-        {
-          userId: user._id,
+        `/event/approve/${event._id}`, {
+        userId: user._id,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+      }
       );
-      console.log(res.data);
       getEvents();
       setShow(false);
+      toast.success("Event approved successfully");
     } catch (error) {
     } finally {
       setShow(false);
@@ -95,8 +93,8 @@ const index = () => {
   return (
     <div className={styles.Approve + " text-4xl"}>
       {user?.type === "Super" ||
-      user?.type === "Dean Academics" ||
-      user?.type === "Mentor" ? (
+        user?.type === "Dean Academics" ||
+        user?.type === "Mentor" ? (
         <div className={styles.card_container}>
           <Modal show={show} hideBackdrop={() => setShow(false)}>
             <div className={styles.Current_event + " flex flex-col"}>
@@ -141,56 +139,57 @@ const index = () => {
               </div>
             </div>
           </Modal>
-          {events.map((event, index) => {
-            return (
-              <div
-                className={styles.Approve_event_card}
-                key={index}
-                onClick={() => {
-                  setShow(true);
-                  setCurrentEvent(event);
-                }}
-              >
-                <div className={styles.card_top}>
-                  <img
-                    src={
-                      event.img ||
-                      "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
-                    }
-                    alt=""
-                  />
-                  <div className={styles.card_right}>
-                    <h3>{event.title || "CSI Hackathon"}</h3>
-                    <p>Hosted by {event.committee || "CSI committee"}</p>
-                  </div>
-                </div>
-                <div className={styles.utils}>
-                  <div className={styles.approve}>Approve</div>
-                  <div className={styles.reject}>Reject</div>
-                </div>
-                <div className={styles.card_bottom}>
-                  <div className={styles.info}>
-                    <div className={styles.event_type}>
-                      <SiHackthebox />
-                      {event.type || "Hackathon"}
-                    </div>
-                    <span></span>
-                    <div className={styles.event_date}>
-                      <BiTimeFive />
-                      {event.startDate === ""
-                        ? "12-03-2021 | 13-03-2021"
-                        : `${event.startDate} | ${event.endDate}`}
-                    </div>
-                    <span></span>
-                    <div className={styles.price}>
-                      <IoPricetagOutline />
-                      {`₹100`}
+          {
+            events.length > 0 ? events.map((event, index) => {
+              return (
+                <div
+                  className={styles.Approve_event_card}
+                  key={index}
+                  onClick={() => {
+                    setShow(true);
+                    setCurrentEvent(event);
+                  }}
+                >
+                  <div className={styles.card_top}>
+                    <img
+                      src={
+                        event.img ||
+                        "https://d8it4huxumps7.cloudfront.net/uploads/images/opportunity/banner/63dc010270fb6_hackathon.png?d=1920x557"
+                      }
+                      alt=""
+                    />
+                    <div className={styles.card_right}>
+                      <h3>{event.title || "CSI Hackathon"}</h3>
+                      <p>Hosted by {event.committee || "CSI committee"}</p>
                     </div>
                   </div>
+                  <div className={styles.utils}>
+                    <div className={styles.approve}>Approve</div>
+                    <div className={styles.reject}>Reject</div>
+                  </div>
+                  <div className={styles.card_bottom}>
+                    <div className={styles.info}>
+                      <div className={styles.event_type}>
+                        <SiHackthebox />
+                        {event.type || "Hackathon"}
+                      </div>
+                      <span></span>
+                      <div className={styles.event_date}>
+                        <BiTimeFive />
+                        {event.startDate === ""
+                          ? "12-03-2021 | 13-03-2021"
+                          : `${event.startDate} | ${event.endDate}`}
+                      </div>
+                      <span></span>
+                      <div className={styles.price}>
+                        <IoPricetagOutline />
+                        {`₹100`}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            }) : <div className="text-6xl font-extrabold ">No events to approve</div>}
         </div>
       ) : (
         <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">

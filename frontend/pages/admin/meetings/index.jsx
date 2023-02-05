@@ -2,6 +2,7 @@ import BreadCrumb from "@components/Navbar/BreadCrumb";
 import { useEffect, useState } from "react";
 import styles from "./meeting.module.scss";
 import API from "@shared/API";
+import moment from "moment/moment";
 
 export default function Meetings() {
   const [meetings, setMeetings] = useState([]);
@@ -9,7 +10,6 @@ export default function Meetings() {
     try {
       const res = await API.get("/meetings");
       setMeetings(res.data.meetings);
-      console.log(res.data.meetings);
     } catch (err) {
       console.log(err);
     } finally {
@@ -22,13 +22,19 @@ export default function Meetings() {
   return (
     <div className={styles.Meeting + " m-10 text-2xl"}>
       <BreadCrumb />
-      <table className="w-full border-collapse bg-white text-left text-3xl text-gray-500">
+      <table className="w-full border-collapse bg-white text-left text-3xl mt-8 text-gray-500">
         <thead className={styles.head_list}>
           <th scope="col" className={styles.list_item}>
             Meeting link
           </th>
           <th scope="col" className={styles.list_item}>
+            Meeting ID
+          </th>
+          <th scope="col" className={styles.list_item}>
             Committee Name
+          </th>
+          <th scope="col" className={styles.list_item}>
+            Created At
           </th>
         </thead>
         <tbody className={styles.row_list}>
@@ -42,8 +48,9 @@ export default function Meetings() {
                   Start Meeting
                 </a>
               </td>
+              <td className={styles.list_item}>{meeting.meetingId}</td>
               <td className={styles.list_item}>{meeting.committee}</td>
-              {/* <td className={styles.list_item}>{user?.committeName}</td> */}
+              <td className={styles.list_item}>{moment(meeting.createdAt).format('DD-MM-YY')}</td>
             </tr>
           ))}
         </tbody>

@@ -24,7 +24,6 @@ export default function Users() {
           committeName: user.committee,
         },
       }).then((res) => {
-        console.log(res);
         setLoading(false);
         setMembers(res.data.members);
       });
@@ -72,7 +71,6 @@ export default function Users() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response);
       getMembers();
     } catch (error) {
       console.log(error);
@@ -119,7 +117,6 @@ export default function Users() {
             label={"Committee Name"}
             placeholder="CSI"
             value={member.committeName}
-            disable={true}
             className=" w-full"
             handleChange={() => (e) =>
               setMember({ ...member, committeName: e.target.value })}
