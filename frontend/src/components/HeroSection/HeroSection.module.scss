@@ -1,0 +1,249 @@
+@import "@assets/styles/variables.scss";
+
+$herobg: rgb(241, 241, 241);
+
+.Hero_section {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  min-height: 70rem;
+  width: 100%;
+  background: transparent;
+
+  @media screen and (max-width: $break-point-tab-lg) {
+    flex-direction: column;
+    padding-top: calc($navbar-height + 4rem);
+    height: max-content;
+    padding-bottom: 5rem;
+  }
+
+  .hero_content {
+    z-index: 1;
+    margin-right: auto;
+    width: max-content;
+
+    @media screen and (max-width: $break-point-tab-lg) {
+      margin-left: auto;
+      margin-bottom: 6rem;
+      width: fit-content;
+    }
+
+    .top_content,
+    .middle_content,
+    .bottom_content {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      width: 100%;
+
+      @media screen and (max-width: $break-point-mobile) {
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      @media screen and (max-width: $break-point-mobile-sm) {
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 10rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: $neutral-500;
+
+        @media screen and (max-width: $break-point-mobile) {
+          font-size: 4rem;
+        }
+
+        @media screen and (max-width: $break-point-desktop-sm) {
+          font-size: 6rem;
+        }
+
+        span {
+          color: $primary-blue;
+        }
+      }
+
+      .content {
+        width: 17rem;
+        font-size: 1.6rem;
+        font-weight: 500;
+        height: max-content;
+        line-height: 2.2rem;
+
+        @media screen and (max-width: $break-point-tab-lg) {
+          text-align: center;
+          width: 28rem;
+        }
+      }
+    }
+
+    .top_content {
+      .content {
+        @media screen and (max-width: $break-point-mobile-sm) {
+          display: none;
+        }
+      }
+    }
+
+    .middle_content {
+      display: flex;
+      $circle_size: 13rem;
+
+      @media screen and (max-width: $break-point-tab-lg) {
+        justify-content: center;
+      }
+
+      .circular_asset {
+        position: relative;
+        width: $circle_size;
+        height: $circle_size;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+
+        .icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 3rem;
+        }
+
+        .circle_text {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          animation: rotateText 40s infinite;
+
+          span {
+            position: absolute;
+            left: 50%;
+            font-size: 1.2rem;
+            transform-origin: 0 calc($circle_size / 2);
+            font-weight: 600;
+          }
+
+          @keyframes rotateText {
+            0% {
+              transform: rotate(0deg);
+            }
+
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+    }
+
+    .btn {
+      margin-top: 3rem;
+
+      @media screen and (max-width: $break-point-tab-lg) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  .asset_show {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    margin-left: 3rem;
+
+    $assetRadius: 5rem;
+    $imgGap: 2rem;
+
+    @media screen and (max-width: $break-point-desktop-sm) {
+      margin-left: -2rem;
+    }
+
+    @media screen and (max-width: $break-point-tab-lg) {
+      margin-left: 0;
+    }
+
+    .blank_asset {
+      background: $neutral-000;
+      width: 30rem;
+    }
+
+    .asset_mid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: $imgGap;
+      max-height: calc(100% - 20rem);
+
+      .asset1,
+      .asset2 {
+        width: 30rem;
+        height: 40rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all 0.3s ease;
+
+        @media screen and (max-width: $break-point-desktop) {
+          width: 24rem;
+          height: 30rem;
+        }
+
+        @media screen and (max-width: $break-point-tab-lg) {
+          width: 100%;
+          height: 35rem;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .asset2 {
+        border-radius: 0 $assetRadius 0 0;
+        box-shadow: 0.3rem -0.3rem 0.2rem rgba(0, 0, 0, 0.02);
+      }
+
+      .asset1 {
+        border-radius: $assetRadius 0 0 0;
+        z-index: 1;
+      }
+
+      .bottom_asset1 {
+        background: $neutral-600;
+        color: rgb(218, 218, 218);
+        border-radius: 0 0 $assetRadius 0;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        position: relative;
+
+        .circle {
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 50%;
+          background: $neutral-000;
+        }
+
+        .desc {
+          font-size: 1.2rem;
+          font-weight: 400;
+          width: 18rem;
+          text-transform: uppercase;
+
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}

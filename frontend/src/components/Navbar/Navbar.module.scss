@@ -1,0 +1,59 @@
+@import "@assets/styles/variables";
+
+.Navbar {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $navbar-height;
+  transition: transform 0.3s ease-in-out;
+  z-index: $z-navbar;
+
+  &.scrolled {
+    border-bottom: 1px solid $neutral-100;
+    background: $neutral-000;
+  }
+
+  .logo {
+    width: 14rem;
+    display: block;
+    cursor: pointer;
+  }
+
+  .menu_list {
+    margin-left: auto;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 600;
+    gap: 3rem;
+    align-items: center;
+
+    .menu_item {
+      color: $neutral-400;
+      cursor: pointer;
+
+      &.active {
+        color: $primary-black;
+      }
+    }
+
+    .btn_secondary {
+      border: 2px solid $primary-black;
+      border-radius: 4rem;
+      padding: 0.3rem 2rem;
+      margin-left: 1rem;
+      cursor: pointer;
+    }
+
+    .btn_primary {
+      background-color: $primary-black;
+      border: 2px solid $primary-black;
+      color: $neutral-100;
+      border-radius: 4rem;
+      padding: 0.3rem 2rem;
+      cursor: pointer;
+    }
+  }
+}

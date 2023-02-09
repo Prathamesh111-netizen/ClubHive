@@ -1,0 +1,200 @@
+@import "@assets/styles/variables.scss";
+
+.User {
+  padding: 0 2rem;
+
+  .card_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(39rem, 1fr));
+    grid-gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .btn_primary {
+    font-size: 1.4rem;
+    padding: 0.6rem 3rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: $primary-blue;
+    width: max-content;
+    height: max-content;
+    color: $neutral-000;
+  }
+
+  .head_list {
+    background: $neutral-000;
+    color: $neutral-600;
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 2rem;
+    border-bottom: 1px solid $neutral-100;
+
+    th {
+      padding: 2rem;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        font-size: 1.4rem;
+        color: $neutral-600;
+        padding: 1rem 2rem;
+        font-weight: 500;
+        color: $neutral-500;
+
+        img {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 0.8rem;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .del {
+      background: $primary-red;
+      color: $neutral-000;
+      border-radius: 0.6rem;
+      padding: 0.6rem 1rem;
+      width: max-content;
+      height: max-content;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 1.8rem;
+      cursor: pointer;
+
+      svg {
+        font-size: 1.4rem;
+      }
+    }
+    .reject {
+      background: $primary-green;
+      color: $neutral-000;
+      border-radius: 0.6rem;
+      padding: 0.6rem 1rem;
+      width: max-content;
+      height: max-content;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 1.8rem;
+      cursor: pointer;
+
+      svg {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .Approve_event_card {
+    width: 40rem;
+    padding: 1rem;
+    box-shadow: $box-shadow-light;
+    background: $neutral-000;
+    border-radius: 0.7rem;
+    cursor: pointer;
+
+    .card_top {
+      display: flex;
+
+      img {
+        width: 5.6rem;
+        height: 5.6rem;
+        border-radius: 0.6rem;
+        margin-right: 1rem;
+        object-fit: cover;
+        padding: 0.2rem;
+        border: 1px solid $neutral-200;
+      }
+
+      .card_right {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        h3 {
+          font-size: 1.7rem;
+          font-weight: 600;
+          color: $neutral-600;
+        }
+
+        p {
+          font-size: 1.2rem;
+          font-weight: 500;
+          color: $neutral-400;
+        }
+      }
+    }
+
+    .utils {
+      display: flex;
+      align-items: center;
+      margin-top: 2rem;
+      gap: 2rem;
+
+      .approve,
+      .reject {
+        padding: 0.7rem 2rem;
+        border-radius: 0.4rem;
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: $neutral-000;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+      }
+
+      .approve {
+        background: $primary-green;
+      }
+      .reject {
+        background: $primary-red;
+      }
+    }
+
+    .card_bottom {
+      .info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+        font-size: 1.3rem;
+
+        .event_type,
+        .event_date,
+        .price {
+          border-radius: 0.4rem;
+          color: $neutral-400;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: $primary-blue;
+
+          svg {
+            color: $primary-blue;
+            font-size: 1.4rem;
+          }
+        }
+
+        .event_type {
+          span {
+            font-size: 1.2rem;
+          }
+        }
+
+        span {
+          border: 1px solid $neutral-200;
+          height: 1.2rem;
+        }
+      }
+    }
+  }
+}

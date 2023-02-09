@@ -1,0 +1,95 @@
+@import "@assets/styles/variables.scss";
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+@-webkit-keyframes autofill {
+  0%,
+  100% {
+    color: #666;
+    background: transparent;
+  }
+}
+
+input {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+.ptr {
+  cursor: pointer;
+}
+
+.primary-scroll {
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 50px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgb(233, 231, 231);
+    border-radius: 50px;
+  }
+}
+
+.Container {
+  padding-left: $pd-container;
+  padding-right: $pd-container;
+
+  @media screen and (max-width: $break-point-tab) {
+    padding-left: $pd-container-tab;
+    padding-right: $pd-container-tab;
+  }
+
+  @media screen and (max-width: $break-point-mobile) {
+    padding-left: $pd-container-sm;
+    padding-right: $pd-container-sm;
+  }
+}
+
+.container_outer {
+  padding-left: $pd-container;
+  padding-right: $pd-container;
+
+  @media screen and (max-width: $break-point-tab) {
+    padding-left: $pd-container-tab;
+    padding-right: $pd-container-tab;
+  }
+
+  @media screen and (max-width: $break-point-mobile) {
+    padding-left: $pd-container-sm;
+    padding-right: $pd-container-sm;
+  }
+}
+
+.padding_top_nav {
+  padding-top: $navbar-height;
+
+  // @media screen and (max-width: $break-point-tab) {
+  //     padding-top: $navbar-height-sm;
+  // }
+}
+
+.sticky_top {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  transition: 0.2s all ease;
+}
+
+.hide_scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,151 @@
+@import "@assets/styles/variables";
+
+.Event {
+  padding: 2rem;
+
+  .add_btn {
+    display: flex;
+    align-items: center;
+    height: max-content;
+    width: max-content;
+    background: $primary-green;
+    color: $neutral-000;
+    padding: 0.7rem 2rem;
+    border-radius: 0.4rem;
+    font-size: 1.3rem;
+    gap: 1rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    svg {
+      color: $neutral-000;
+    }
+  }
+
+  .card_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(39rem, 1fr));
+    grid-gap: 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: $neutral-600;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .Approve_event_card {
+    width: 40rem;
+    padding: 1rem;
+    box-shadow: $box-shadow-light;
+    background: $neutral-000;
+    border-radius: 0.7rem;
+    cursor: pointer;
+
+    .card_top {
+      display: flex;
+
+      img {
+        width: 5.6rem;
+        height: 5.6rem;
+        border-radius: 0.6rem;
+        margin-right: 1rem;
+        object-fit: cover;
+        padding: 0.2rem;
+        border: 1px solid $neutral-200;
+      }
+
+      .card_right {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        h3 {
+          font-size: 1.7rem;
+          font-weight: 600;
+          color: $neutral-600;
+        }
+
+        p {
+          font-size: 1.2rem;
+          font-weight: 500;
+          color: $neutral-400;
+        }
+      }
+    }
+
+    .utils {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 2rem;
+
+      .approve,
+      .reject {
+        padding: 0.7rem 2rem;
+        border-radius: 0.4rem;
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: $neutral-000;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+      }
+
+      .status {
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: $primary-green;
+        width: 100%;
+      }
+
+      .approve {
+        background: $primary-green;
+      }
+      .reject {
+        background: $primary-red;
+      }
+    }
+
+    .card_bottom {
+      .info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+        font-size: 1.3rem;
+
+        .event_type,
+        .event_date,
+        .price {
+          border-radius: 0.4rem;
+          color: $neutral-400;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: $primary-blue;
+
+          svg {
+            color: $primary-blue;
+            font-size: 1.4rem;
+          }
+        }
+
+        .event_type {
+          span {
+            font-size: 1.2rem;
+          }
+        }
+
+        span {
+          border: 1px solid $neutral-200;
+          height: 1.2rem;
+        }
+      }
+    }
+  }
+}
